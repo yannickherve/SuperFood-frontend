@@ -4,6 +4,7 @@ import {AuthService} from '../services/auth.service';
 import {User} from '../models/user';
 import {Router} from '@angular/router';
 import {AlertService} from '@full-fledged/alerts';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private route: Router,
-              private alertService: AlertService
+              private alertService: AlertService,
+              private spinner: NgxSpinnerService
               ) { }
 
   ngOnInit(): void {
@@ -29,17 +31,35 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.showSpinner();
+    this.alertService.info('Connexion en cours...');
     const observer = {
       next: (user) => {
         this.user = user;
         setTimeout(() => {
+          this.spinner.hide();
+          this.alertService.success(
+            'Bon retour ' + this.user.name + ' !'
+          );
           this.route.navigate(['/home']).then(() => {});
-        }, 1000);
+        }, 700);
       },
       error: (error) => {
         this.alertService.danger(error.error.message);
+        this.spinner.hide();
       }
     };
     this.authService.login(this.loginForm.value).subscribe(observer);
+  }
+
+  showSpinner(): void {
+    this.spinner.show(undefined,
+      {
+        type: 'ball-triangle-path',
+        size: 'medium',
+        color: 'white',
+        fullScreen: true
+      }
+    );
   }
 }
