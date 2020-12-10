@@ -1,0 +1,39 @@
+<ng-container>
+  <h4 fxLayoutAlign="center center">Details du produit</h4>
+  <div class="detail-container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="40px" *ngIf="product">
+    <mat-card class="product-card">
+      <img mat-card-image [src]="product.image" alt="Product">
+      <mat-card-content>
+        <p>Restaurant: {{ product.restaurant.name }}.</p>
+        <p>Infos: {{ product.restaurant.description }}.</p>
+<!--        <p>Adresse du restaurant: {{ product.restaurant.address }}.</p>-->
+        <p>Email: {{ product.restaurant.email }}.</p>
+        <p>Statut restaurant: {{ product.restaurant.status }}.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" [routerLink]="['/products-center/products']">
+          <mat-icon>reply</mat-icon>
+          Retour à la liste
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div>
+      <mat-card class="product-card-side">
+        <mat-card-header>
+          <mat-card-title>Nom : {{ product.name }}</mat-card-title>
+        </mat-card-header>
+        <div mat-card-image></div>
+        <mat-card-content>
+          <div class="title">
+            <p>Prix: {{ product.price  | currency:'EUR':'€' }}.</p>
+            <p>Description : {{ product.description }}.</p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <app-cart-button-widget [ngStyle]="{'margin-left': '70px'}" [product]="product"></app-cart-button-widget>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</ng-container>

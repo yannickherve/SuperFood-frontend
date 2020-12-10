@@ -1,0 +1,54 @@
+.content {
+  top: 65px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: auto;
+}
+.spacer {
+  height: 100px;
+  background-color: red;
+}
+.example-sidenav-content {
+
+}
+.filter-sidenav {
+  max-width: 400px;
+  width: 300px;
+  overflow: auto !important;
+}
+mat-drawer {
+  //position: fixed;
+  background-color: rgb(236, 236, 236);
+
+}
+mat-card-content {
+  max-height: 250px;
+  height: auto;
+}
+.example-card {
+  max-width: 320px;
+  margin: 0px 5px 5px 0px;
+  box-shadow: 0 0 5px 1px #dee1e1;
+}
+
+.example-header-image {
+  background-image: url('https://source.unsplash.com/1600x900/?product');
+  background-size: cover;
+}
+
+.example-sidenav-content:first-child {
+  margin: 10px 5px 5px 5px;
+}
+
+.list-width {
+  width: 200px;
+
+}
+
+.list-item:hover {
+  background-color: rgba(83, 83, 83, 0.178);
+  cursor: pointer;
+}
+
+

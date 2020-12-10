@@ -1,0 +1,43 @@
+<article class="content">
+  <mat-toolbar class="second-toolbar" color="warn">
+    <ngx-spinner>
+      <p class="loading">Product Loading..</p>
+    </ngx-spinner>
+    <button (click)="drawer.toggle()" mat-icon-button type="button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    Component
+  </mat-toolbar>
+
+  <mat-drawer-container class="example-container">
+    <mat-drawer #drawer fxFlex="20" fxLayout="column" fxLayoutAlign="start space-between" mode="side"
+                opened position="start" class="filter-sidenav ">
+      <mat-list *ngFor="let i of [].constructor(4)" class="list-width" role="list">
+        <mat-list-item class="list-item" role="listitem">Filter here</mat-list-item>
+      </mat-list>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <div class="example-sidenav-content" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+        <mat-card *ngFor="let product of products" class="example-card">
+          <mat-card-header>
+            <div class="example-header-image" fxLayoutAlign.xs="center center" mat-card-avatar></div>
+            <mat-card-title>{{ product.name }}</mat-card-title>
+            <mat-card-subtitle>Categorie : {{ product.category }}</mat-card-subtitle>
+          </mat-card-header>
+          <img [src]="product.image" alt="Product"
+               mat-card-image>
+          <mat-card-content>
+            <p>{{ product.description }}.</p>
+            <p>Prix: {{ product.price  | currency:'EUR':'€' }}.</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button [routerLink]="['/products-center/product-view', product._id]" mat-flat-button color="primary">Détails du plat</button>
+            <app-cart-button-widget [product]="product"></app-cart-button-widget>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</article>
+

@@ -1,0 +1,32 @@
+.header-menu {
+  padding: 20px;
+  margin: 0px;
+  //position: relative;
+  width: 100%;
+  //top: 0px;
+  //z-index: 10;
+}
+
+.sidenav-content {
+  height: 100%;
+  width: 100%;
+}
+
+.sidenav-content-list .mat-list-item {
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:active,
+a:hover {
+  color: lightgray;
+}
+.logo {
+  padding: 0px 5px;
+  font-size: 20px;
+}
+

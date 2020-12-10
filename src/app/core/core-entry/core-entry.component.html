@@ -1,0 +1,20 @@
+<ng-container class="container">
+  <mat-sidenav-container class="sidenav-container" (backdropClick)="close('backdrop')">
+    <mat-sidenav #sidenav role="navigation" class="sidenav" disableClose>
+      <app-sidenav-left (closeSidenav)="sidenav.close()"></app-sidenav-left>
+    </mat-sidenav>
+
+    <mat-sidenav-content fxLayout="column">
+      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+
+      <main >
+        <router-outlet></router-outlet>
+      </main>
+
+      <app-footer fxFlexOffset="auto"></app-footer>
+
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</ng-container>

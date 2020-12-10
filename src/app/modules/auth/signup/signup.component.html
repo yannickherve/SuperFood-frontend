@@ -1,0 +1,68 @@
+<section class="signup-form">
+  <form [formGroup]="signupForm" (ngSubmit)="registerUser()">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Inscription</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Nom complet" formControlName="name">
+            <mat-error *ngIf="signupForm.controls['name'].hasError('required')">
+              Nom et prénom <strong>obligatoires</strong></mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input type="email" matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="signupForm.controls['email'].hasError('required')">
+              Email <strong>obligatoire</strong></mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input #pass type="password" matInput placeholder="Mot de passe" formControlName="password" minlength="7">
+            <mat-hint align="end">{{pass.value.length || 0 }} / 7</mat-hint>
+            <mat-error *ngIf="signupForm.controls['password'].hasError('required')">
+              Mot de passe <strong>obligatoire</strong></mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput #phone placeholder="Contact" formControlName="phone">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input pattern="[0-9]+" matInput maxlength="3" #age placeholder="Age" formControlName="age">
+            <mat-hint align="end">{{age.value.length || 0 }} / 3</mat-hint>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <textarea matInput placeholder="Addresse" formControlName="address"></textarea>
+            <mat-error *ngIf="signupForm.controls['address'].hasError('required')">
+              Addresse <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-radio-group formControlName="role">
+              <mat-radio-button value="0">Client</mat-radio-button>
+              <mat-radio-button value="1">Restaurateur</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div>
+          <mat-checkbox formControlName="newsletter">S'abonner a la newlsetter</mat-checkbox>
+        </div>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [disabled]="signupForm.invalid" type="submit">Submit</button>
+        </mat-card-actions>
+
+      </mat-card-content>
+    </mat-card>
+  </form>
+</section>
