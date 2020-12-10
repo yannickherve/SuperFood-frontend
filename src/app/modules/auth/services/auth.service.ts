@@ -17,7 +17,15 @@ export class AuthService {
   }
 
   login(user: User): Observable<any> {
-    return this.http.post(this.API_URL + '/users/login', user);
+    return this.http.post(this.API_URL + '/users/login', user).pipe(
+      map((data: {token: string, user: any}) => {
+        localStorage.setItem('access_token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        return data.user;
+      }), catchError(err => {
+        return throwError(err);
+      })
+    );
   }
 
   register(user: User): Observable<any>{

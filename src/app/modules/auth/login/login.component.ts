@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {User} from '../models/user';
 import {Router} from '@angular/router';
+import {AlertService} from '@full-fledged/alerts';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   user: User;
 
   constructor(private authService: AuthService,
-              private route: Router
+              private route: Router,
+              private alertService: AlertService
               ) { }
 
   ngOnInit(): void {
@@ -28,24 +30,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const observer = {
-      next: (data) => {
-        this.user = data.user;
-        const token = data.token;
-        localStorage.setItem('access_token', token);
-        const userData = {
-          name: data.user.name,
-          age: data.user.age,
-          last_seen: data.user.last_seen,
-          email: data.user.email,
-          role: data.user.role
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
+      next: (user) => {
+        this.user = user;
         setTimeout(() => {
-          this.route.navigate(['/home']);
+          this.route.navigate(['/home']).then(() => {});
         }, 1000);
       },
       error: (error) => {
-        // console.log(error);
+        this.alertService.danger(error.error.message);
       }
     };
     this.authService.login(this.loginForm.value).subscribe(observer);
