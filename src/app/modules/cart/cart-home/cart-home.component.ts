@@ -1,24 +1,35 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartServerResponse} from '../models/cart.model';
 import {CartService} from '../services/cart.service';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
 import {AlertService} from '@full-fledged/alerts';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {Subject} from 'rxjs';
-import {map, takeUntil, tap} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart-home',
   templateUrl: './cart-home.component.html',
   styleUrls: ['./cart-home.component.scss']
 })
-export class CartHomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CartHomeComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['image', 'name', 'price', 'quantity', '_id'];
   dataSource: CartServerResponse;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  cartObserver = {
+    next: () => {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 700);
+    },
+    error: (error) => {
+      this.alertService.danger(error.error.message);
+      this.spinner.hide();
+    }
+  };
+
   destroy$ = new Subject<boolean>();
 
   constructor(
@@ -32,14 +43,10 @@ export class CartHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initDataSource(): void {
+    this.showSpinner();
     this.cartService.getCart('createdAt:desc', 1, 5).pipe(
-      tap(carts => console.log(carts)),
       map( (cartData: CartServerResponse) => this.dataSource = cartData)
-    ).subscribe();
-  }
-
-  ngAfterViewInit(): void {
-    //
+    ).subscribe(this.cartObserver);
   }
 
   removeItemCart(id: string): void {
@@ -53,7 +60,7 @@ export class CartHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     const removeObserver = {
-      next: response => {
+      next: () => {
         setTimeout(() => this.spinner.hide(), 500);
         setTimeout(() => this.alertService.success('Produit supprimé'), 1000);
       }
@@ -63,19 +70,30 @@ export class CartHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
+    this.destroy$.next();
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
+  // Spinner method
+  showSpinner(): void {
+    this.spinner.show(undefined,
+      {
+        type: 'ball-spin-clockwise-fade-rotating',
+        size: 'medium',
+        color: 'white',
+        fullScreen: true
+      }
+    );
+  }
 
   onPaginateChange(event: PageEvent): void {
+    this.showSpinner();
     const defaultSort = 'createdAt:desc';
     let page = event.pageIndex;
     const limit = event.pageSize;
     page = page + 1;
-    console.log(page, limit);
     this.cartService.getCart(defaultSort, page, limit).pipe(
       map((cartData: CartServerResponse) => this.dataSource = cartData)
-    ).subscribe();
+    ).subscribe(this.cartObserver);
   }
 }

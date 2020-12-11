@@ -1,7 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Product} from '../models/product.model';
+import {Product, ProductServerResponse} from '../models/product.model';
 import {ProductService} from '../services/product.service';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {map} from 'rxjs/operators';
+import {PageEvent} from '@angular/material/paginator';
+import {AlertService} from '@full-fledged/alerts';
 
 @Component({
   selector: 'app-product-home',
@@ -11,16 +14,32 @@ import {NgxSpinnerService} from 'ngx-spinner';
 export class ProductHomeComponent implements OnInit {
   products: Product[];
   @Input() product: Product;
+  dataSource: ProductServerResponse;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageEvent: PageEvent;
+
+  productsObserver = {
+    next: () => {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 700);
+    },
+    error: (error) => {
+      this.alertService.danger(error.error.message);
+      this.spinner.hide();
+    }
+  };
 
   constructor(
     private productService: ProductService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.showSpinner();
     this.loadProducts();
   }
+  // Spinner method
   showSpinner(): void {
     this.spinner.show(undefined,
       {
@@ -30,24 +49,24 @@ export class ProductHomeComponent implements OnInit {
         fullScreen: true
       }
     );
-    setTimeout(() => this.spinner.hide(), 1000);
   }
-
+  // Load products
   loadProducts(): void {
-    const productsObserver = {
-      next: (response) => {
-        console.log(response);
-        this.products = response.products;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    };
-    this.productService.getProducts().subscribe(productsObserver);
+    this.showSpinner();
+    this.productService.getProducts('createdAt:desc', 1, 10).pipe(
+      map(productsData => this.dataSource = productsData)
+    ).subscribe(this.productsObserver);
   }
-
-  addItemToCart(product: Product): void {
-    console.log(product);
+  // Paginate change
+  onPaginateChange(event: PageEvent): void {
+    this.showSpinner();
+    const defaultSort = 'createdAt:desc';
+    let page = event.pageIndex;
+    const limit = event.pageSize;
+    page = page + 1;
+    this.productService.getProducts(defaultSort, page, limit).pipe(
+      map(productsData => this.dataSource = productsData)
+    ).subscribe(this.productsObserver);
   }
 
 }
