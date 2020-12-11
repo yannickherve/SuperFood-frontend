@@ -17,15 +17,17 @@
       </mat-list>
     </mat-drawer>
 
-    <mat-drawer-content>
-      <div class="example-sidenav-content" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
-        <mat-card *ngFor="let product of products" class="example-card">
+    <mat-drawer-content >
+      <div class="product-content"
+           fxLayout="row wrap" fxLayout.xs="column"
+           fxLayoutAlign="space-evenly center"
+          *ngIf="dataSource">
+        <mat-card *ngFor="let product of dataSource.products" class="example-card">
           <mat-card-header>
-            <div class="example-header-image" fxLayoutAlign.xs="center center" mat-card-avatar></div>
             <mat-card-title>{{ product.name }}</mat-card-title>
             <mat-card-subtitle>Categorie : {{ product.category }}</mat-card-subtitle>
           </mat-card-header>
-          <img [src]="product.image" alt="Product"
+          <img [src]="product.image" alt="Product" class="img-container"
                mat-card-image>
           <mat-card-content>
             <p>{{ product.description }}.</p>
@@ -37,6 +39,15 @@
           </mat-card-actions>
         </mat-card>
       </div>
+
+      <mat-paginator *ngIf="dataSource"
+        [length]="dataSource.numOfProducts"
+        [pageSize]="dataSource.perPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event; onPaginateChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+
     </mat-drawer-content>
   </mat-drawer-container>
 </article>
