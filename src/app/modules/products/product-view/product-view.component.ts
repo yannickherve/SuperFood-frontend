@@ -25,11 +25,10 @@ export class ProductViewComponent implements OnInit {
         this.product = product;
         setTimeout(() => {
           this.spinner.hide();
-        }, 1000);
+        }, 800);
       },
       error: err => {
         this.spinner.hide();
-        console.error(err);
       }
     };
     this.productService.getProduct(this.route.snapshot.paramMap.get('id'))
