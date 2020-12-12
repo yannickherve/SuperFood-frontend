@@ -1,6 +1,14 @@
 <ng-container>
   <p style="text-align: center;">LISTE DES RESTAURANTS!</p>
 
+  <div class="searchBar">
+    <mat-form-field style="font-size: 15px; width: 70%">
+      <mat-label>Saisir le nom du restaurant</mat-label>
+      <input (keyup)="applyFilterByName($event)" matInput placeholder="Ex. resto">
+      <mat-hint>Eviter au maximum les espaces</mat-hint>
+    </mat-form-field>
+  </div>
+
   <div *ngIf="dataSource" class="container">
     <mat-card *ngFor="let restaurant of dataSource.restaurants" class="item">
       <mat-card-header>
@@ -12,8 +20,16 @@
         <p><strong>Description:</strong> {{ restaurant.description }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-flat-button [ngStyle]="{'margin-left': '120px'}" color="primary">VOIR</button>
+        <button color="primary" mat-flat-button>VOIR</button>
       </mat-card-actions>
     </mat-card>
   </div>
+  <mat-paginator (page)="pageEvent = $event; onPaginateChange($event)"
+           *ngIf="dataSource"
+           [length]="dataSource.numOfRestaurants"
+           [pageSizeOptions]="pageSizeOptions"
+           [pageSize]="dataSource.perPage"
+           showFirstLastButtons>
+  </mat-paginator>
+
 </ng-container>

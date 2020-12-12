@@ -33,6 +33,24 @@ export class RestaurantService {
     );
   }
 
+  paginateByName(sortBy: string, page: number, limit: number, name: string): Observable<RestaurantServerResponse> {
+    const options = {
+      params: new HttpParams()
+        .set('sortBy', sortBy)
+        .set('page', String(page))
+        .set('limit', String(limit))
+        .set('name', String(name))
+    };
+    return this.http.get<RestaurantServerResponse>(this.API_URL + '/restaurants', options).pipe(
+      retry(3), catchError(this.handleError),
+      map((restaurantData: RestaurantServerResponse) => {
+        return restaurantData;
+      }), catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
   handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
@@ -42,7 +60,6 @@ export class RestaurantService {
       // Server-side errors
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    // window.alert(errorMessage);
     return throwError(errorMessage);
   }
 }

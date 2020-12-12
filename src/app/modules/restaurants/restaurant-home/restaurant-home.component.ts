@@ -13,14 +13,14 @@ import {map} from 'rxjs/operators';
 })
 export class RestaurantHomeComponent implements OnInit {
   dataSource: RestaurantServerResponse;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [2, 5, 10, 25, 100];
   pageEvent: PageEvent;
+  filterValue: string;
   restaurantsObserver = {
     next: () => {
       setTimeout(() => {
-        console.log(this.dataSource);
         this.spinner.hide();
-      }, 700);
+      }, 600);
     },
     error: (error) => {
       this.alertService.danger(error.error.message);
@@ -36,7 +36,6 @@ export class RestaurantHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.lodRestaurants();
-    console.log(this.dataSource);
   }
 
   lodRestaurants(): void {
@@ -45,16 +44,24 @@ export class RestaurantHomeComponent implements OnInit {
     ).subscribe(this.restaurantsObserver);
   }
 
-  // Paginate change
+  // Listen paginate change
   onPaginateChange(event: PageEvent): void {
     this.showSpinner();
     const defaultSort = 'createdAt:desc';
     let page = event.pageIndex;
     const limit = event.pageSize;
     page = page + 1;
-    this.restaurantService.getRestaurants(defaultSort, page, limit).pipe(
-      map(productsData => this.dataSource = productsData)
-    ).subscribe(this.restaurantsObserver);
+
+    if (this.filterValue === undefined) {
+      this.restaurantService.getRestaurants(defaultSort, page, limit).pipe(
+        map(restaurantsData => this.dataSource = restaurantsData)
+      ).subscribe(this.restaurantsObserver);
+    } else {
+      this.restaurantService.paginateByName(defaultSort, page, limit, this.filterValue).pipe(
+        map(restaurantsData => this.dataSource = restaurantsData)
+      ).subscribe(this.restaurantsObserver);
+    }
+
   }
 
   // Spinner method
@@ -69,4 +76,10 @@ export class RestaurantHomeComponent implements OnInit {
     );
   }
 
+  applyFilterByName(event: Event): void {
+    this.filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.restaurantService.paginateByName('createdAt:desc', 1, 10, this.filterValue).pipe(
+      map(restaurantsData => this.dataSource = restaurantsData)
+    ).subscribe();
+  }
 }
