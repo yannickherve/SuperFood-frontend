@@ -25,13 +25,12 @@ export class HeaderComponent implements OnInit {
   onLogout(): void {
     const authObserver = {
       next: res => {
-        console.log(res);
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
 
         setTimeout(() => {
-          this.route.navigate(['/home']);
-        }, 2000);
+          this.route.navigate(['/home']).then(() => {});
+        }, 800);
       },
       error: err => {
         // console.log(err);

@@ -8,6 +8,7 @@ import { RestaurantEditComponent } from './restaurant-edit/restaurant-edit.compo
 import { RestaurantHomeComponent } from './restaurant-home/restaurant-home.component';
 import { RestaurantItemComponent } from './restaurant-item/restaurant-item.component';
 import { RestaurantViewComponent } from './restaurant-view/restaurant-view.component';
+import {SharedModule} from '../../shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { RestaurantViewComponent } from './restaurant-view/restaurant-view.compo
   ],
   imports: [
     CommonModule,
-    RestaurantsRoutingModule
+    RestaurantsRoutingModule,
+    SharedModule
   ]
 })
 export class RestaurantsModule { }

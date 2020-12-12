@@ -25,7 +25,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
       }, 700);
     },
     error: (error) => {
-      this.alertService.danger(error.error.message);
+      this.alertService.danger('Connectez vous svp');
       this.spinner.hide();
     }
   };

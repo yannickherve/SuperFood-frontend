@@ -43,6 +43,11 @@ export class AuthService {
     return localStorage.getItem('access_token');
   }
 
+  removeToken(): void {
+    localStorage.removeItem('user');
+    localStorage.removeItem('access_token');
+  }
+
   logout(): Observable<any> {
     return this.http.get(this.API_URL + '/users/logout');
   }

@@ -1,1 +1,19 @@
-<p>restaurant-home works!</p>
+<ng-container>
+  <p style="text-align: center;">LISTE DES RESTAURANTS!</p>
+
+  <div *ngIf="dataSource" class="container">
+    <mat-card *ngFor="let restaurant of dataSource.restaurants" class="item">
+      <mat-card-header>
+        <mat-card-title>Nom: {{ restaurant.name }}</mat-card-title>
+        <mat-card-subtitle>État: {{ restaurant.status }}</mat-card-subtitle>
+      </mat-card-header>
+      <img [src]="restaurant.image" alt="restaurant" class="img-container">
+      <mat-card-content>
+        <p><strong>Description:</strong> {{ restaurant.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button [ngStyle]="{'margin-left': '120px'}" color="primary">VOIR</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-container>

@@ -28,6 +28,8 @@ export class CartService {
       retry(3), catchError(this.handleError),
       map( (cartData: CartServerResponse) => {
         return cartData;
+      }), catchError(err => {
+        return throwError(err);
       })
     );
   }

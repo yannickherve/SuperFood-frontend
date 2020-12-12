@@ -1,7 +1,7 @@
 <ng-container>
   <h4 fxLayoutAlign="center center">Details du produit</h4>
   <div class="detail-container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="40px" *ngIf="product">
-    <mat-card class="product-card">
+    <mat-card class="product-card" *ngIf="product">
       <img mat-card-image [src]="product.image" alt="Product">
       <mat-card-content>
         <p>Restaurant: {{ product.restaurant.name }}.</p>
