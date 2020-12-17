@@ -41,10 +41,6 @@ const routes: Routes = [
       {
         path: 'moderator',
         loadChildren: () => import('./modules/moderator/moderator.module').then(m => m.ModeratorModule)
-      },
-      {
-        path: 'user',
-        loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
       }
     ],
   },
@@ -53,6 +49,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
+  {
+    path: 'users',
+    loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+  }
 ];
 
 @NgModule({

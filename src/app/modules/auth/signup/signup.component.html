@@ -1,5 +1,5 @@
 <section class="signup-form">
-  <h1 style="text-align: center;">Page de d'inscription</h1>
+  <h1 style="text-align: center;">Page d'inscription</h1>
   <form (ngSubmit)="registerUser()" [formGroup]="signupForm">
     <div class="container" fxLayout="column" fxLayoutGap="10px">
       <mat-form-field>
@@ -47,7 +47,7 @@
                              (opened)="panelOpenState = true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-             Vous êtes restaurateur?
+             Vous êtes restaurateur ?
             </mat-panel-title>
             <mat-panel-description>
               En savoir plus... <!--{{panelOpenState ? 'open' : 'closed'}}-->

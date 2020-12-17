@@ -1,14 +1,15 @@
-.sidenav-container {
-  //position: absolute;
-  //top: 0;
-  //bottom: 0;
-  //left: 0;
-  //right: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden !important;
-}
 .sidenav {
   width: 250px;
+}
+
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-content {
+  flex: 1;
+  padding-top: 64px;
 }
 

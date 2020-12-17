@@ -1,11 +1,7 @@
 .header-menu {
-  padding: 20px;
-  margin: 0;
-  //position: relative;
-  width: 100%;
-  //top: 0px;
-  //z-index: 10;
-  overflow: hidden !important;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  position: fixed;
+  z-index: 2;
 }
 
 .sidenav-content {
