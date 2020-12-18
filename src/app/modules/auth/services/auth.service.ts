@@ -4,7 +4,6 @@ import {environment} from '../../../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {User} from '../models/user';
 import {catchError, map} from 'rxjs/operators';
-import {strict} from 'assert';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +14,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Content-Type', 'img/png');
   }
 
   login(user: User): Observable<any> {
@@ -52,13 +52,23 @@ export class AuthService {
     return this.http.get(this.API_URL + '/users/logout');
   }
 
-  // User admin-profile
+  // User profile
   getUserProfile(): Observable<User> {
     return this.http.get(this.API_URL + '/users/me').pipe(
       map((user: User) => {
         return user;
       }),
       catchError(this.handleError)
+    );
+  }
+
+  getUserAvatar(id: string): Observable<any>  {
+    return this.http.get(this.API_URL + '/users/' + id + '/avatar', {responseType: 'arraybuffer'}).pipe(
+      map(res => {
+        const blob = new Blob([res], {type: 'image/png'});
+        console.log(blob);
+        return (window.URL || window.webkitURL).createObjectURL(blob);
+      })
     );
   }
 

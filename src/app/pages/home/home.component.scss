@@ -1,6 +1,7 @@
 .container {
   //overflow-y: hidden;
-  overflow-x: hidden !important;
+  //overflow-x: hidden !important;
+  flex: 1 0 auto;
 }
 
 .container-left {
