@@ -34,10 +34,9 @@ export class DashboardNavigationComponent implements OnInit{
       next: data => {
         this.currentUser = data;
         this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
-        console.log(this.avatarLink);
       },
       error: error => {
-        console.log(error);
+        // console.log(error);
       }
     };
     this.authService.getUserProfile().subscribe(userObserver);
