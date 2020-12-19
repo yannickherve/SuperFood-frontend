@@ -35,7 +35,10 @@ export class AuthService {
     );
   }
 
-  register(user: User): Observable<any>{
+  /**
+   * Create a user
+   */
+  register(user: User): Observable<any> {
     return this.http.post(this.API_URL + '/users/signup', user).pipe(
       map((data: { token: string, user: any }) => {
         return data.user;
@@ -44,6 +47,10 @@ export class AuthService {
         return throwError(err);
       })
     );
+  }
+
+  updateUser(user): Observable<any> {
+    return this.http.patch(this.API_URL + '/users/me', user);
   }
 
   getToken(): string {
@@ -57,12 +64,13 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.get(this.API_URL + '/users/logout').pipe(
       map(res => {
-        console.log('logout');
         this.user = null;
       })
     );
   }
-
+  /**
+   * Check if user is isAuthenticated
+   */
   isAuthenticated(): boolean {
     const token = localStorage.getItem('access_token');
     if (token == null){
@@ -84,11 +92,9 @@ export class AuthService {
   getCurrentUser(): Observable<User> {
     return this.http.get(this.API_URL + '/users/me').pipe(
       map((user: User) => {
-        // this.isAuthenticated.next(true);
         return user;
       }),
       catchError(err => {
-        // this.isAuthenticated.next(false);
         return throwError(err);
       })
     );
@@ -103,7 +109,9 @@ export class AuthService {
     );
   }
 
-  // Error
+  /**
+   * Handle errors
+   */
   handleError(error: HttpErrorResponse): Observable<any> {
     let msg = '';
     if (error.error instanceof ErrorEvent) {

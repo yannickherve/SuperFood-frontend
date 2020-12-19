@@ -11,19 +11,8 @@ export interface User {
   password: string;
   age: number;
   newsletter: boolean;
+  address: string;
   phone: string;
   role: Direction;
   last_seen: string;
 }
-
-export let UserModel: User = {
-  _id: null,
-  name: null,
-  email: null,
-  password: null,
-  age: null,
-  newsletter: null,
-  phone: null,
-  role: null,
-  last_seen: null,
-};

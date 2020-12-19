@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth/services/auth.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {FormBuilder, Validators} from '@angular/forms';
+import {UpdateUserDialogComponent} from '../../../shared/dialogs/update-user-dialog/update-user-dialog.component';
+import {AlertService} from '@full-fledged/alerts';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,7 +27,9 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private fb: FormBuilder
+    private dialog: MatDialog,
+    private fb: FormBuilder,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +41,7 @@ export class UserProfileComponent implements OnInit {
         this.currentUser = data;
       },
       error: error => {
-        // console.log(error);
+        this.alertService.danger(error.error.message);
       }
     };
     this.authService.getCurrentUser().subscribe(userObserver);
@@ -46,4 +51,31 @@ export class UserProfileComponent implements OnInit {
       //
   }
 
+  editUser(): void {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data =  this.currentUser;
+    dialogConfig.width = '450px';
+
+    const dialogRef = this.dialog.open(UpdateUserDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      const updateObserver = {
+        next: () => {
+            this.alertService.success('Mise à jour réussie');
+        },
+        error: (error) => {
+          this.alertService.danger(error.error.message);
+        }
+      };
+      if (result) {
+        this.authService.updateUser(result).subscribe(updateObserver);
+      }
+
+    });
+
+  }
 }
