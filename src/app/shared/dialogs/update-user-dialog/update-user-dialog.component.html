@@ -1,0 +1,54 @@
+<h4>Modifier le profil</h4>
+
+<form [formGroup]="form">
+  <div class="container">
+    <mat-dialog-content class="dial-content">
+
+      <mat-form-field>
+        <input formControlName="_id" matInput placeholder="ID">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input formControlName="name" matInput placeholder="Nom complet" type="text">
+        <mat-error *ngIf="form.controls['name'].hasError('required')">
+          Nom et prénom <strong>obligatoires</strong></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input formControlName="email" matInput placeholder="Email" type="email">
+        <mat-error *ngIf="form.controls['email'].hasError('required')">
+          Email <strong>obligatoire</strong></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input formControlName="age" matInput placeholder="Age">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input formControlName="phone" matInput placeholder="Phone">
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea formControlName="address" matInput placeholder="Addresse"></textarea>
+        <mat-error *ngIf="form.controls['address'].hasError('required')">
+          Addresse <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="newsletter">S'abonner a la newlsetter</mat-checkbox>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="dial-actions" fxLayout="row" fxLayoutAlign="center center"fxLayoutGap="15px">
+
+      <button (click)="close()" class="mat-raised-button">Annuler</button>
+
+      <button (click)="save()" [disabled]="form.invalid" color="primary" mat-raised-button type="submit">Valider
+      </button>
+
+    </mat-dialog-actions>
+
+  </div>
+
+</form>
+

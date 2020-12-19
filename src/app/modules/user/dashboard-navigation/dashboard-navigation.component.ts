@@ -12,7 +12,7 @@ import {AuthService} from '../../auth/services/auth.service';
 export class DashboardNavigationComponent implements OnInit{
   currentUser: any = {};
   avatar: any;
-  avatarLink: any;
+  avatarLink: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -27,29 +27,20 @@ export class DashboardNavigationComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUserData();
-     // this.getAvatar();
   }
   getUserData(): void {
     const userObserver = {
       next: data => {
         this.currentUser = data;
-        this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
+        if (data.image) {
+          this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
+        }
       },
       error: error => {
         // console.log(error);
       }
     };
-    this.authService.getUserProfile().subscribe(userObserver);
+    this.authService.getCurrentUser().subscribe(userObserver);
   }
-  getAvatar(): void {
-    const avatarObserver = {
-      next: avatar => {
-        // this.avatar = avatar;
-      },
-      // error: error => console.log(error)
-    };
-    this.authService.getUserAvatar('5fc821498510905c2848e7ba').subscribe(avatarObserver);
-  }
-
 
 }

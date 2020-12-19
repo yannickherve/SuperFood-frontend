@@ -10,18 +10,21 @@ import { SidebarItemComponent } from './navigation/sidebar-item/sidebar-item.com
 import { FooterComponent } from './navigation/footer/footer.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {CommonModule} from '@angular/common';
+import { UpdateUserDialogComponent } from './dialogs/update-user-dialog/update-user-dialog.component';
 
 @NgModule({
-  declarations: [SidenavLeftComponent, HeaderComponent, SidebarItemComponent, FooterComponent],
-  imports: [
-    RouterModule,
-    FlexLayoutModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgxSpinnerModule,
-    MaterialModule,
-    DragDropModule,
-  ],
+  declarations: [SidenavLeftComponent, HeaderComponent, SidebarItemComponent, FooterComponent, UpdateUserDialogComponent],
+    imports: [
+        RouterModule,
+        FlexLayoutModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxSpinnerModule,
+        MaterialModule,
+        DragDropModule,
+        CommonModule,
+    ],
   exports: [
     FlexLayoutModule,
     MaterialModule,

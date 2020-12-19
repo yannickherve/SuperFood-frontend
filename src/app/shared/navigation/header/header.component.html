@@ -39,15 +39,15 @@
   </div>
   <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end">
     <mat-nav-list class="sidenav-content-list" fxLayout>
-      <a [routerLink]="['/users']" mat-list-item>Dashboard</a>
-      <a [routerLink]="['/moderator']" mat-list-item>Moderator</a>
-      <a [routerLink]="['/auth/login']" mat-list-item routerLinkActive="active">Login</a>
-      <a [routerLink]="['/auth/signup']" mat-list-item routerLinkActive="active">Inscription</a>
-      <a [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active">
+      <a [routerLink]="['/users']" mat-list-item *ngIf="isUser">User Dashboard</a>
+      <a [routerLink]="['/moderator']" mat-list-item *ngIf="isModerator">Moderator</a>
+      <a [routerLink]="['/auth/login']" mat-list-item routerLinkActive="active" *ngIf="!isAuthorized">Login</a>
+      <a [routerLink]="['/auth/signup']" mat-list-item routerLinkActive="active" *ngIf="!isAuthorized">Inscription</a>
+      <a [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active" *ngIf="isAuthorized">
         <mat-icon>shopping_cart</mat-icon>
         <span>Panier</span>
       </a>
-      <a (click)="onLogout()" mat-list-item routerLinkActive="active">Logout</a>
+      <a (click)="onLogout()" mat-list-item routerLinkActive="active" *ngIf="isAuthorized">Logout</a>
     </mat-nav-list>
   </div>
 </mat-toolbar>

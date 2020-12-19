@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {Observable, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {User} from '../models/user';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {Role} from '../models/role';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +13,21 @@ import {catchError, map} from 'rxjs/operators';
 export class AuthService {
   API_URL = environment.baseUrl;
   headers: HttpHeaders = new HttpHeaders();
+  // isAuthenticated = new ReplaySubject(1);
+  private user: User;
 
-  constructor(private http: HttpClient) {
+  constructor(
+      private http: HttpClient,
+      private jwtHelper: JwtHelperService
+  ) {
     this.headers.append('Content-Type', 'application/json');
-    this.headers.append('Content-Type', 'img/png');
   }
 
   login(user: User): Observable<any> {
     return this.http.post(this.API_URL + '/users/login', user).pipe(
       map((data: {token: string, user: any}) => {
         localStorage.setItem('access_token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        this.user = data.user;
         return data.user;
       }), catchError(err => {
         return throwError(err);
@@ -29,14 +35,22 @@ export class AuthService {
     );
   }
 
-  register(user: User): Observable<any>{
+  /**
+   * Create a user
+   */
+  register(user: User): Observable<any> {
     return this.http.post(this.API_URL + '/users/signup', user).pipe(
       map((data: { token: string, user: any }) => {
         return data.user;
-      }), catchError(err => {
+      }),
+      catchError(err => {
         return throwError(err);
       })
     );
+  }
+
+  updateUser(user): Observable<any> {
+    return this.http.patch(this.API_URL + '/users/me', user);
   }
 
   getToken(): string {
@@ -44,21 +58,45 @@ export class AuthService {
   }
 
   removeToken(): void {
-    localStorage.removeItem('user');
     localStorage.removeItem('access_token');
   }
 
   logout(): Observable<any> {
-    return this.http.get(this.API_URL + '/users/logout');
+    return this.http.get(this.API_URL + '/users/logout').pipe(
+      map(res => {
+        this.user = null;
+      })
+    );
+  }
+  /**
+   * Check if user is isAuthenticated
+   */
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('access_token');
+    if (token == null){
+      return false;
+    } else {
+      return !this.jwtHelper.isTokenExpired(token);
+    }
   }
 
-  // User profile
-  getUserProfile(): Observable<User> {
+  hasRole(role: Role): any {
+    const token = localStorage.getItem('access_token');
+    const tokenPayload = this.jwtHelper.decodeToken(token);
+    return this.isAuthenticated() && tokenPayload.role === role;
+  }
+
+  /**
+   * get current user from server
+   */
+  getCurrentUser(): Observable<User> {
     return this.http.get(this.API_URL + '/users/me').pipe(
       map((user: User) => {
         return user;
       }),
-      catchError(this.handleError)
+      catchError(err => {
+        return throwError(err);
+      })
     );
   }
 
@@ -66,13 +104,14 @@ export class AuthService {
     return this.http.get(this.API_URL + '/users/' + id + '/avatar', {responseType: 'arraybuffer'}).pipe(
       map(res => {
         const blob = new Blob([res], {type: 'image/png'});
-        console.log(blob);
         return (window.URL || window.webkitURL).createObjectURL(blob);
       })
     );
   }
 
-  // Error
+  /**
+   * Handle errors
+   */
   handleError(error: HttpErrorResponse): Observable<any> {
     let msg = '';
     if (error.error instanceof ErrorEvent) {
