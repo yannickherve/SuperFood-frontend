@@ -7,6 +7,7 @@ import {httpInterceptorProviders} from './http-interceptors';
 import { CoreEntryComponent } from './core-entry/core-entry.component';
 import {RouterModule} from '@angular/router';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
 
 
 @NgModule({
@@ -18,6 +19,10 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     RouterModule,
     NgxSpinnerModule,
   ],
-  providers: [httpInterceptorProviders]
+  providers: [
+    httpInterceptorProviders,
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }
+  ]
 })
 export class CoreModule { }

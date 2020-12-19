@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../../modules/auth/services/auth.service';
 import {Router} from '@angular/router';
+import {Role} from '../../../modules/auth/models/role';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,20 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  get isAuthorized(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  get isModerator(): boolean {
+    return this.authService.hasRole(Role.moderator);
+  }
+  get isUser(): boolean {
+    return this.authService.hasRole(Role.user);
+  }
+  get isAdmin(): boolean {
+    return this.authService.hasRole(Role.admin);
   }
 
   onToggleSidenav(): void {

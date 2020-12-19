@@ -15,8 +15,6 @@
         />
         <mat-hint *ngIf="loginForm.controls.email.errors">Email is required</mat-hint>
         <mat-error>Invalid or missing email.</mat-error>
-<!--        <mat-hint>Please enter a valid email.</mat-hint>-->
-<!--        <mat-error>Invalid or missing email.</mat-error>-->
       </mat-form-field>
       <mat-form-field>
         <input
@@ -28,8 +26,6 @@
         />
         <mat-hint *ngIf="loginForm.controls.password.errors">Password is required</mat-hint>
         <mat-error>Missing password.</mat-error>
-<!--        <mat-hint>Please enter your password.</mat-hint>-->
-<!--        <mat-error>Missing password.</mat-error>-->
       </mat-form-field>
       <button
         type="submit"
@@ -39,29 +35,10 @@
       >
         Submit
       </button>
+
       </div>
     </form>
-
-<!--  <mat-grid-list cols="3">-->
-<!--    <mat-grid-tile colspan="3">-->
-<!--      <mat-card>-->
-<!--        <mat-card-header color="primary">-->
-<!--          <mat-card-title>Login Form</mat-card-title>-->
-<!--        </mat-card-header>-->
-<!--        <form>-->
-<!--          <mat-form-field style="width:400px !important">-->
-<!--            <mat-label>Email</mat-label>-->
-<!--            <input matInput>-->
-<!--          </mat-form-field>-->
-<!--          <br>-->
-<!--          <mat-form-field style="width:400px !important">-->
-<!--            <mat-label>Password</mat-label>-->
-<!--            <input matInput>-->
-<!--          </mat-form-field>-->
-<!--          <br>-->
-<!--          <button mat-raised-button color="primary">Submit</button>-->
-<!--        </form>-->
-<!--      </mat-card>-->
-<!--    </mat-grid-tile>-->
-<!--  </mat-grid-list>-->
+  <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 20px">
+    <button mat-flat-button routerLink="/" color="warn">Retour Acceuil</button>
+  </div>
 </section>

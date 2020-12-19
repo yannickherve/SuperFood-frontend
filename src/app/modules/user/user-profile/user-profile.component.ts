@@ -36,10 +36,10 @@ export class UserProfileComponent implements OnInit {
         this.currentUser = data;
       },
       error: error => {
-        console.log(error);
+        // console.log(error);
       }
     };
-    this.authService.getUserProfile().subscribe(userObserver);
+    this.authService.getCurrentUser().subscribe(userObserver);
   }
 
   updateUser(): void {
