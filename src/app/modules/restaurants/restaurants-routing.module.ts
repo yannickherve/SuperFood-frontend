@@ -6,6 +6,7 @@ import {RoleGuard} from '../../core/guards/role.guard';
 
 const routes: Routes = [
   { path: '', component: RestaurantHomeComponent},
+  { path: '', component: RestaurantHomeComponent},
   {
     path: 'restaurant-add',
     component: RestaurantAddComponent,

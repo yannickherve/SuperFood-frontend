@@ -1,0 +1,44 @@
+<ng-container>
+ <form>
+   <div class="order-container">
+     <h4>MA COMMANDE</h4>
+     <h5>Adresse de facturation et de livraison</h5>
+     <div>Ajouter une addresse</div>
+     <div class="address">
+       <span>if address empty-> Vous n'avez pas d'adresse créez en une</span>
+       <mat-card>
+         <mat-card-header>
+           <mat-card-title>address</mat-card-title>
+         </mat-card-header>
+         <mat-card-content>
+           <p>Civility: M  <span>full name 165 rue de la fosse</span></p>
+           <p>Address 1</p>
+           <p>City Montpellier, postcode 34000</p>
+           <p>Country France</p>
+           <p>Numéro de téléphone: phone</p>
+         </mat-card-content>
+       </mat-card>
+     </div>
+
+     <div class="payment">
+       <h5>Mode de paiement</h5>
+       <p>make checkbox payment 'card', 'mandate', 'transfer', 'check'</p>
+       <p>
+         Carte bancaire----
+        Vous devrez renseigner un formulaire de paiement sur la page de confirmation de cette commande.
+      </p>
+     </div>
+     <div class="order-details">
+       <h5>Récapitulafif de ma commande</h5>
+       <p>Afficher Article  et prix</p>
+       <p>Mode de paiement</p>
+       <p>Prix total</p>
+     </div>
+     <div class="agree">
+       <h5>Veuillez vérifier votre commande avant le paiement !</h5>
+       <span>J'ai lu les conditions générales de vente et les conditions d'annulation</span>
+     </div>
+   </div>
+ </form>
+
+</ng-container>

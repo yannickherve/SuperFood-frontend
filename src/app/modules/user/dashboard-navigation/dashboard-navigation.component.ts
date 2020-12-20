@@ -32,9 +32,8 @@ export class DashboardNavigationComponent implements OnInit{
     const userObserver = {
       next: data => {
         this.currentUser = data;
-        if (data.image) {
-          this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
-        }
+        this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
+
       },
       error: error => {
         // console.log(error);

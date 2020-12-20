@@ -33,7 +33,8 @@ import { UpdateUserDialogComponent } from './dialogs/update-user-dialog/update-u
     HeaderComponent,
     SidenavLeftComponent,
     FooterComponent,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    CommonModule
   ]
 })
 export class SharedModule { }

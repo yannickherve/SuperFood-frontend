@@ -39,6 +39,10 @@ const routes: Routes = [
         loadChildren: () => import('./modules/cart/cart.module').then((m) => m.CartModule),
       },
       {
+        path: 'order-create',
+        loadChildren: () => import('./modules/order/order.module').then(m => m.OrderModule)
+      },
+      {
         path: 'moderator',
         loadChildren: () => import('./modules/moderator/moderator.module').then(m => m.ModeratorModule)
       }

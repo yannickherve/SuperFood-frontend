@@ -1,14 +1,24 @@
 .container {
-  //overflow-y: hidden;
-  //overflow-x: hidden !important;
   flex: 1 0 auto;
+  margin: 20px;
 }
 
 .container-left {
-  width: auto;
-  height: auto;
-  //position: relative;
-  border: 1px solid black;
+  width: 500px;
+  height: 500px;
+}
+.container-left img {
+  background-size: cover;
+  object-fit: cover;
+}
+.container-right {
+  margin-left: 50px;
+  display: flex;
+  align-items: center;
+}
+.container-right button {
+  height: 70px;
+  width: 250px;
 }
 //.filter-sidenav {
 //  width: 240px;
