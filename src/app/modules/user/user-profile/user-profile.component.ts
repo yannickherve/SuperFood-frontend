@@ -13,18 +13,6 @@ import {AlertService} from '@full-fledged/alerts';
 export class UserProfileComponent implements OnInit {
   currentUser: any = {};
   avatarLink: string;
-  profileForm = this.fb.group({
-    name: [null],
-    email: [null],
-    password: [null],
-    age: [null, Validators.compose([
-      Validators.minLength(0), Validators.maxLength(3)])
-    ],
-    phone: null,
-    address: [null],
-    avatar: null,
-    newsletter: null
-  });
 
   constructor(
     private authService: AuthService,
