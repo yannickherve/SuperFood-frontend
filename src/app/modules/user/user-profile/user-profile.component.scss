@@ -1,11 +1,30 @@
 .profile-container {
-  padding: 10px;
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  width: 100%;
+  align-items: center;
 }
 
 .form-box {
   width: 70%;
   justify-content: space-between;
 }
+
+.profile-card {
+  margin: 20px 10px;
+  width: 60%;
+  max-width: 80%;
+}
+
+.profile-actions {
+  text-align: center;
+}
+
+.header-image {
+  background-size: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  padding: 2px;
+}
+

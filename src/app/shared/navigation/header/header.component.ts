@@ -26,9 +26,11 @@ export class HeaderComponent implements OnInit {
   get isModerator(): boolean {
     return this.authService.hasRole(Role.moderator);
   }
+
   get isUser(): boolean {
     return this.authService.hasRole(Role.user);
   }
+
   get isAdmin(): boolean {
     return this.authService.hasRole(Role.admin);
   }

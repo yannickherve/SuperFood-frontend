@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../auth/services/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -12,6 +12,7 @@ import {AlertService} from '@full-fledged/alerts';
 })
 export class UserProfileComponent implements OnInit {
   currentUser: any = {};
+  avatarLink: string;
   profileForm = this.fb.group({
     name: [null],
     email: [null],
@@ -39,16 +40,13 @@ export class UserProfileComponent implements OnInit {
     const userObserver = {
       next: data => {
         this.currentUser = data;
+        this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
       },
       error: error => {
         this.alertService.danger(error.error.message);
       }
     };
     this.authService.getCurrentUser().subscribe(userObserver);
-  }
-
-  updateUser(): void {
-      //
   }
 
   editUser(): void {
@@ -65,7 +63,8 @@ export class UserProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       const updateObserver = {
         next: () => {
-            this.alertService.success('Mise à jour réussie');
+          this.getUserData();
+          this.alertService.success('Mise à jour réussie');
         },
         error: (error) => {
           this.alertService.danger(error.error.message);
