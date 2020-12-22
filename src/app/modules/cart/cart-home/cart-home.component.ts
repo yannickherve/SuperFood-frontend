@@ -6,6 +6,7 @@ import {AlertService} from '@full-fledged/alerts';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
+import {HelperCartService} from '../services/helper-cart.service';
 
 @Component({
   selector: 'app-cart-home',
@@ -19,7 +20,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
   pageEvent: PageEvent;
 
   cartObserver = {
-    next: () => {
+    next: (cart) => {
       setTimeout(() => {
         this.spinner.hide();
       }, 700);
@@ -34,6 +35,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
+    private helperCartService: HelperCartService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService
   ) { }
@@ -47,6 +49,9 @@ export class CartHomeComponent implements OnInit, OnDestroy {
     this.cartService.getCart('createdAt:desc', 1, 5).pipe(
       map( (cartData: CartServerResponse) => this.dataSource = cartData)
     ).subscribe(this.cartObserver);
+  }
+  getTotalPrice(): number {
+   return this.helperCartService.getTotalPrice(this.dataSource.carts);
   }
 
   removeItemCart(id: string): void {
@@ -74,6 +79,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
+
   // Spinner method
   showSpinner(): void {
     this.spinner.show(undefined,

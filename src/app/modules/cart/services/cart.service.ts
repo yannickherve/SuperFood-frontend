@@ -16,7 +16,7 @@ export class CartService {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  getCart(sortBy: string, page: number, limit: number): Observable<CartServerResponse> {
+  getCart(sortBy?: string, page?: number, limit?: number): Observable<CartServerResponse> {
     // Define params for url pagination
     const options = {
       params: new HttpParams()
@@ -36,6 +36,10 @@ export class CartService {
 
   addToCart(product: { product: string }): Observable<any> {
     return this.http.post<Cart>(this.API_URL + '/cart', product);
+  }
+
+  updateCart(id: string, quantity: number): Observable<Cart> {
+    return this.http.patch<Cart>(this.API_URL + '/cart/' + id, {quantity});
   }
 
   removeFromCart(cartId: string): Observable<any> {
