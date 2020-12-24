@@ -14,6 +14,8 @@ import {Cart} from '../models/cart.model';
 export class CartButtonWidgetComponent implements OnInit {
   @Input() product: Product;
   existingCart: Cart;
+  loading = false;
+
 
   constructor(
     private cartService: CartService,
@@ -26,6 +28,7 @@ export class CartButtonWidgetComponent implements OnInit {
   }
 
   addItemToCart(product: Product): void {
+    this.showSpinner();
     const cartObserver = {
       next: (cartData) => {
         const newCart = cartData.carts.find( cartValue => cartValue.product._id === product._id);
@@ -46,10 +49,16 @@ export class CartButtonWidgetComponent implements OnInit {
   updateCartItem(cart: Cart): void {
     this.cartService.updateCart(cart._id, cart.quantity + 1).subscribe({
       next: () => {
-        this.alertService.success('qtity updated');
+        setTimeout(() => {
+          this.spinner.hide();
+          this.alertService.success('qtity updated');
+        }, 700);
       },
       error: err => {
-        this.alertService.danger('Erreur');
+        setTimeout(() => {
+          this.spinner.hide();
+          this.alertService.danger('Erreur');
+        }, 600);
       }
     });
   }
@@ -57,12 +66,29 @@ export class CartButtonWidgetComponent implements OnInit {
   addCartItem(product: Product): void {
     this.cartService.addToCart({product: product._id}).subscribe({
       next: () => {
-        this.alertService.success('Le produit à été ajouté au panier');
+        setTimeout(() => {
+          this.spinner.hide();
+          this.alertService.success('Le produit à été ajouté au panier');
+        }, 700);
     },
       error: err => {
-          this.alertService.danger('Erreur lor de l\'ajout au panier');
+          setTimeout(() => {
+            this.spinner.hide();
+            this.alertService.danger('Erreur lor de l\'ajout au panier');
+          }, 700);
         }
     });
+  }
+
+  showSpinner(): void {
+    this.spinner.show(undefined,
+      {
+        type: 'ball-running-dots',
+        size: 'medium',
+        color: 'white',
+        fullScreen: false,
+      }
+    );
   }
 
 }

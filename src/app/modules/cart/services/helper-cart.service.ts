@@ -15,11 +15,11 @@ export class HelperCartService {
   ) { }
 
   getTotalPrice(cart: Cart[]): number {
-    let totalprice = 0;
+    let totalPrice = 0;
     for (const carValue of cart) {
-      totalprice = carValue.price * carValue.quantity;
+      totalPrice = carValue.price * carValue.quantity;
     }
-    return parseFloat(totalprice.toFixed(2))
+    return parseFloat(totalPrice.toFixed(2));
   }
 
 }

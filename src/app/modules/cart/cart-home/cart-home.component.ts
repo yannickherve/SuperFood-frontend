@@ -66,12 +66,14 @@ export class CartHomeComponent implements OnInit, OnDestroy {
 
     const removeObserver = {
       next: () => {
-        setTimeout(() => this.spinner.hide(), 500);
+        setTimeout(() => {
+          this.initDataSource();
+          this.spinner.hide();
+        }, 500);
         setTimeout(() => this.alertService.success('Produit supprimé'), 1000);
       }
     };
     this.cartService.removeFromCart(id).pipe().pipe(takeUntil(this.destroy$)).subscribe(removeObserver);
-    this.initDataSource();
   }
 
   ngOnDestroy(): void {
