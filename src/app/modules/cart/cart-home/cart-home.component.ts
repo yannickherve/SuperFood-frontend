@@ -22,6 +22,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
   cartObserver = {
     next: (cart) => {
       setTimeout(() => {
+        this.getTotalPrice();
         this.spinner.hide();
       }, 700);
     },

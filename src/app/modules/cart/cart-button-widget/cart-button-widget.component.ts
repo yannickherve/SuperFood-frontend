@@ -28,9 +28,10 @@ export class CartButtonWidgetComponent implements OnInit {
   }
 
   addItemToCart(product: Product): void {
-    this.showSpinner();
+
     const cartObserver = {
       next: (cartData) => {
+        this.showSpinner();
         const newCart = cartData.carts.find( cartValue => cartValue.product._id === product._id);
         this.existingCart = newCart;
         if (newCart) {
@@ -40,7 +41,8 @@ export class CartButtonWidgetComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.log(error);
+        this.spinner.hide();
+        this.alertService.danger('Connexion réquise');
       }
     };
     this.cartService.getCart().subscribe(cartObserver);
@@ -52,13 +54,13 @@ export class CartButtonWidgetComponent implements OnInit {
         setTimeout(() => {
           this.spinner.hide();
           this.alertService.success('qtity updated');
-        }, 700);
+        }, 500);
       },
       error: err => {
         setTimeout(() => {
           this.spinner.hide();
           this.alertService.danger('Erreur');
-        }, 600);
+        }, 100);
       }
     });
   }
@@ -69,13 +71,13 @@ export class CartButtonWidgetComponent implements OnInit {
         setTimeout(() => {
           this.spinner.hide();
           this.alertService.success('Le produit à été ajouté au panier');
-        }, 700);
+        }, 500);
     },
       error: err => {
           setTimeout(() => {
             this.spinner.hide();
             this.alertService.danger('Erreur lor de l\'ajout au panier');
-          }, 700);
+          }, 100);
         }
     });
   }

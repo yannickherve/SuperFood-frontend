@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Cart} from '../models/cart.model';
 import {CartService} from './cart.service';
-import {Product} from '../../products/models/product.model';
 import {AlertService} from '@full-fledged/alerts';
 
 @Injectable({
@@ -14,12 +13,13 @@ export class HelperCartService {
     private alertService: AlertService
   ) { }
 
-  getTotalPrice(cart: Cart[]): number {
-    let totalPrice = 0;
-    for (const carValue of cart) {
-      totalPrice = carValue.price * carValue.quantity;
+  getTotalPrice(carts: Cart[]): number {
+    let total = 0;
+    for (let index = 0; index < carts.length; index++) {
+      const element = carts[index];
+      total = +element.price + total;
     }
-    return parseFloat(totalPrice.toFixed(2));
+    return parseFloat(total.toFixed(2));
   }
 
 }
