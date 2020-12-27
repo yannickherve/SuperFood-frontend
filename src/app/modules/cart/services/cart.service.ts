@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {Observable, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, throwError} from 'rxjs';
 import {Cart, CartServerResponse} from '../models/cart.model';
-import {catchError, map, retry, tap} from 'rxjs/operators';
+import {catchError, map, retry, switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,13 @@ import {catchError, map, retry, tap} from 'rxjs/operators';
 export class CartService {
   private API_URL = environment.baseUrl;
   headers: HttpHeaders = new HttpHeaders();
+
+   cartSource = new BehaviorSubject<CartServerResponse>({
+    carts: [], currentPage: null, numOfCarts: null, pages: null, perPage: null
+  });
+  cart = this.cartSource.asObservable();
+  cartChange = new Subject<CartServerResponse>();
+  cart2 = this.cartChange.asObservable();
 
   constructor(private http: HttpClient) {
     this.headers.append('Content-Type', 'application/json');
@@ -27,6 +34,8 @@ export class CartService {
     return this.http.get<CartServerResponse>(this.API_URL + '/cart', options).pipe(
       retry(3), catchError(this.handleError),
       map( (cartData: CartServerResponse) => {
+        this.cartChange.next(cartData);
+        this.cartSource.next(cartData);
         return cartData;
       }), catchError(err => {
         return throwError(err);

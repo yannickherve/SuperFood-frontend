@@ -17,7 +17,7 @@ export class HelperCartService {
     let total = 0;
     for (let index = 0; index < carts.length; index++) {
       const element = carts[index];
-      total = +element.price + total;
+      total = (+element.price * element.quantity) + total;
     }
     return parseFloat(total.toFixed(2));
   }

@@ -68,6 +68,7 @@ export class CartButtonWidgetComponent implements OnInit {
   addCartItem(product: Product): void {
     this.cartService.addToCart({product: product._id}).subscribe({
       next: () => {
+        this.cartService.getCart().subscribe();
         setTimeout(() => {
           this.spinner.hide();
           this.alertService.success('Le produit à été ajouté au panier');
@@ -88,7 +89,7 @@ export class CartButtonWidgetComponent implements OnInit {
         type: 'ball-running-dots',
         size: 'medium',
         color: 'white',
-        fullScreen: false,
+        fullScreen: true,
       }
     );
   }
