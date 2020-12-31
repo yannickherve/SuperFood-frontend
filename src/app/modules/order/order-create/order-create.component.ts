@@ -10,6 +10,7 @@ import {of} from 'rxjs';
 import {AlertService} from '@full-fledged/alerts';
 import {Router} from '@angular/router';
 import {AddressService} from '../../address/services/address.service';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-order-create',
@@ -35,7 +36,8 @@ export class OrderCreateComponent implements OnInit {
     private helperCartService: HelperCartService,
     private alertService: AlertService,
     private route: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -56,11 +58,13 @@ export class OrderCreateComponent implements OnInit {
   }
 
   retrieveCart(): void {
+    this.spinner.show();
     const retrieveObserver = {
       next: data => {
         this.orderForm.patchValue({
           amount: this.getTotalPrice()
         });
+        this.spinner.hide();
       },
       error: err => {
         this.alertService.danger(err);
@@ -76,6 +80,7 @@ export class OrderCreateComponent implements OnInit {
   }
 
   createOrder(): void {
+    this.spinner.show();
     const orderObserver = {
       next: order => {
         this.reinitializeCart();
@@ -91,6 +96,7 @@ export class OrderCreateComponent implements OnInit {
     const deleteObserver = {
       next: res => {
         this.alertService.success('La commande a été effectuée');
+        this.spinner.hide();
         this.route.navigate(['/products-center/products']).then(() => {});
         this.cartService.getCart().subscribe();
       },

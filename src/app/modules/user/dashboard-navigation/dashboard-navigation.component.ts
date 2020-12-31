@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {AuthService} from '../../auth/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-navigation',
@@ -22,7 +23,8 @@ export class DashboardNavigationComponent implements OnInit{
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,26 @@ export class DashboardNavigationComponent implements OnInit{
       }
     };
     this.authService.getCurrentUser().subscribe(userObserver);
+  }
+
+  get isAuthorized(): boolean {
+    return this.authService.isAuthenticated();
+  }
+  onLogout(): void {
+    const authObserver = {
+      next: res => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+
+        setTimeout(() => {
+          this.route.navigate(['/home']).then(() => {});
+        }, 800);
+      },
+      error: err => {
+        // console.log(err);
+      }
+    };
+    this.authService.logout().subscribe(authObserver);
   }
 
 }
