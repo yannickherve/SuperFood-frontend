@@ -12,15 +12,17 @@
       <mat-card-content>
         <p>id: {{ address._id }}</p>
         <p>Civility: {{ address.civility }}</p>
-        <p>{{ address.address1 }}</p>
+        <p>Adresse 1 : {{ address.address1 }}</p>
+        <p>Adresse 2 : {{ address?.address2 }}</p>
+        <p *ngIf="address?.company">Compagnie : {{ address?.company }}</p>
         <p>{{ address.city }}, {{ address.postcode }}</p>
         <p>{{ address.country }}</p>
         <p>Numéro de téléphone: {{ address.phone }}</p>
       </mat-card-content>
       <hr>
       <mat-card-actions style="margin: 5px">
-        <button style="margin: 5px; color: violet" mat-flat-button>Modifier</button>
-        <button style="margin: 5px; color: violet" mat-flat-button >Supprimer</button>
+        <button style="margin: 5px; color: violet" mat-flat-button [routerLink]="['/users/addresses/address-edit', address._id]" routerLink="/users/addresses/address-edit">Modifier</button>
+        <button style="margin: 5px; color: violet" mat-flat-button (click)="removeAddress(address._id)">Supprimer</button>
       </mat-card-actions>
     </mat-card>
   </div>

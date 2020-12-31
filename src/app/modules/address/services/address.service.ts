@@ -18,9 +18,9 @@ export class AddressService {
   }
 
   /**
-   * Read orders
+   * Read addresses
    */
-  getAddress(sortBy?: string, page?: number, limit?: number): Observable<AddressServerResponse> {
+  getAddresses(sortBy?: string, page?: number, limit?: number): Observable<AddressServerResponse> {
     const options = {
       params: new HttpParams()
         .set('sortBy', sortBy)
@@ -49,6 +49,31 @@ export class AddressService {
         return throwError(err);
       })
     );
+  }
+
+  /**
+   * Update an address
+   */
+  updateAddress(id: string, address: Address): Observable<Address> {
+    return this.http.patch<Address>(this.API_URL + '/addresses/' + id, address);
+  }
+
+  getAddress(addressId: string): Observable<Address> {
+    return this.http.get<Address>(this.API_URL + '/addresses/' + addressId).pipe(
+      retry(3), catchError(this.handleError),
+      map((address: Address) => {
+        return address;
+      }), catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  /**
+   * Delete address
+   */
+  deleteAddress(addressId: string): Observable<Address> {
+    return this.http.delete<Address>(this.API_URL + '/addresses/' + addressId);
   }
 
   handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {

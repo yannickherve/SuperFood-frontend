@@ -52,7 +52,7 @@ export class OrderCreateComponent implements OnInit {
         this.alertService.danger(error);
       }
     };
-    this.addressService.getAddress().subscribe(addressObserver);
+    this.addressService.getAddresses().subscribe(addressObserver);
   }
 
   retrieveCart(): void {

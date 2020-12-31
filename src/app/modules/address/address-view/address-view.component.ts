@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AddressService} from '../services/address.service';
-import {AddressServerResponse} from '../models/address';
+import {Address, AddressServerResponse} from '../models/address';
 import {AlertService} from '@full-fledged/alerts';
 import {Subscription} from 'rxjs';
 import {PageEvent} from '@angular/material/paginator';
@@ -33,12 +33,12 @@ export class AddressViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getUserAddress();
+    this.getUserAddresses();
   }
 
-  getUserAddress(): void {
+  getUserAddresses(): void {
     this.showSpinner();
-    this.addressesSubs = this.addressService.getAddress('createdAt:desc', 1, 5).pipe(
+    this.addressesSubs = this.addressService.getAddresses('createdAt:desc', 1, 5).pipe(
       map(addressData => this.addresses = addressData)
     ).subscribe(this.addressObserver);
   }
@@ -50,7 +50,7 @@ export class AddressViewComponent implements OnInit, OnDestroy {
     let page = event.pageIndex;
     const limit = event.pageSize;
     page = page + 1;
-    this.addressesSubs = this.addressService.getAddress(defaultSort, page, limit).pipe(
+    this.addressesSubs = this.addressService.getAddresses(defaultSort, page, limit).pipe(
       map(addressData => this.addresses = addressData)
     ).subscribe(this.addressObserver);
   }
@@ -73,4 +73,20 @@ export class AddressViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  removeAddress(addressId: string): void {
+    this.spinner.show();
+    const deleteObserver = {
+      next: data => {
+        setTimeout(() => {
+          this.alertService.success('Adresse supprimée');
+          this.getUserAddresses();
+          this.spinner.hide();
+        }, 600);
+      },
+      error: err => {
+        this.alertService.danger(err);
+      }
+    };
+    this.addressService.deleteAddress(addressId).subscribe(deleteObserver);
+  }
 }
