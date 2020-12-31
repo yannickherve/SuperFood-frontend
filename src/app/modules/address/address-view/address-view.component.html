@@ -20,4 +20,11 @@
       </mat-card-actions>
     </mat-card>
   </div>
+  <mat-paginator *ngIf="addresses"
+                 [length]="addresses.numOfAddress"
+                 [pageSize]="addresses.perPage"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageEvent = $event; onPaginateChange($event)"
+                 showFirstLastButtons>
+  </mat-paginator>
 </ng-container>

@@ -5,6 +5,7 @@ import {AlertService} from '@full-fledged/alerts';
 import {Subscription} from 'rxjs';
 import {PageEvent} from '@angular/material/paginator';
 import {map} from 'rxjs/operators';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-address-view',
@@ -18,7 +19,7 @@ export class AddressViewComponent implements OnInit, OnDestroy {
   pageEvent: PageEvent;
   addressObserver = {
     next: address => {
-      console.log(this.addresses);
+      this.spinner.hide();
     },
     error: error => {
       this.alertService.danger(error);
@@ -27,7 +28,8 @@ export class AddressViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private addressService: AddressService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit(): void {
@@ -35,9 +37,34 @@ export class AddressViewComponent implements OnInit, OnDestroy {
   }
 
   getUserAddress(): void {
+    this.showSpinner();
     this.addressesSubs = this.addressService.getAddress('createdAt:desc', 1, 10).pipe(
       map(addressData => this.addresses = addressData)
     ).subscribe(this.addressObserver);
+  }
+
+  // Paginate change
+  onPaginateChange(event: PageEvent): void {
+    this.showSpinner();
+    const defaultSort = 'createdAt:desc';
+    let page = event.pageIndex;
+    const limit = event.pageSize;
+    page = page + 1;
+    this.addressesSubs = this.addressService.getAddress(defaultSort, page, limit).pipe(
+      map(addressData => this.addresses = addressData)
+    ).subscribe(this.addressObserver);
+  }
+
+  // Spinner method
+  showSpinner(): void {
+    this.spinner.show(undefined,
+      {
+        type: 'ball-fall',
+        size: 'medium',
+        color: 'white',
+        fullScreen: true
+      }
+    );
   }
 
   ngOnDestroy(): void {
