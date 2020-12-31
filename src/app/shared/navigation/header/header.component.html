@@ -43,10 +43,14 @@
       <a [routerLink]="['/moderator']" mat-list-item *ngIf="isModerator">Moderator</a>
       <a [routerLink]="['/auth/login']" mat-list-item routerLinkActive="active" *ngIf="!isAuthorized">Login</a>
       <a [routerLink]="['/auth/signup']" mat-list-item routerLinkActive="active" *ngIf="!isAuthorized">Inscription</a>
-      <a [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active" *ngIf="isAuthorized">
-        <mat-icon>shopping_cart</mat-icon>
-        <span>Panier</span>
-      </a>
+      <div class="shopping-cart-link-container" *ngIf="cartServer$ | async as cartServe">
+        <a [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active" *ngIf="isAuthorized">
+          <span [matBadge]="cartServe.numOfCarts" matBadgePosition="before" matBadgeSize="small" matBadgeColor="warn">
+            <mat-icon>shopping_cart</mat-icon>
+          </span>
+            Panier
+        </a>
+      </div>
       <a (click)="onLogout()" mat-list-item routerLinkActive="active" *ngIf="isAuthorized">Logout</a>
     </mat-nav-list>
   </div>

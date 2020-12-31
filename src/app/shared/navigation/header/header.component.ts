@@ -2,6 +2,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../../modules/auth/services/auth.service';
 import {Router} from '@angular/router';
 import {Role} from '../../../modules/auth/models/role';
+import {CartService} from '../../../modules/cart/services/cart.service';
+import {Observable} from 'rxjs';
+import {Cart, CartServerResponse} from '../../../modules/cart/models/cart.model';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +13,23 @@ import {Role} from '../../../modules/auth/models/role';
 })
 export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
+  cartServer$: Observable<CartServerResponse>;
+  cart: CartServerResponse;
+  cartChanged: Observable<CartServerResponse>;
 
   constructor(
     private authService: AuthService,
-    private route: Router
+    private route: Router,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.cartService.getCart().subscribe();
+      this.cartServer$ = this.cartService.cart;
+    } else {
+      return;
+    }
   }
 
   get isAuthorized(): boolean {

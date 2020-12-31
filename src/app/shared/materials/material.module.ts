@@ -23,6 +23,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   imports: [
@@ -49,9 +50,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatGridListModule,
     MatRadioModule,
     MatMenuModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatBadgeModule
   ],
   exports: [
+    MatBadgeModule,
     MatExpansionModule,
     MatMenuModule,
     MatRadioModule,

@@ -1,0 +1,72 @@
+.container {
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.order-container {
+  width: 60%;
+  margin: 3em;
+  //border: solid red;
+  padding: 5px;
+  background-color: white;
+  box-shadow: 3px 3px red, -1em 0 .4em olive;
+}
+.order {
+  margin: 1.52rem;
+}
+
+.order .address {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  margin: 1em;
+  border-bottom: 1px solid black;
+}
+
+.order .address .card-item {
+  min-width: 35%;
+  //width: auto;
+  min-height: 20%;
+  height: 22%;
+  margin: 8px;
+}
+.order-header {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 20px;
+}
+.address-radio-group {
+  display: flex;
+  //flex-direction: column;
+  flex-flow: row wrap;
+  margin: 15px 0;
+  justify-content: center;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+.address-radio-button {
+  margin: 5px;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.order .payment {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+h5 {
+  font-size: 1.64rem;
+  line-height: 110%;
+  margin: 1.2rem 0 0.7rem 0;
+}

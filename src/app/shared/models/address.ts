@@ -17,5 +17,14 @@ export interface Address {
   bp: string;
   postcode: string;
   city: string;
+  country: string;
   phone: string;
+}
+
+export interface AddressServerResponse {
+  addresses: Address;
+  currentPage: number;
+  pages: number;
+  perPage: number;
+  numOfAddress: number;
 }

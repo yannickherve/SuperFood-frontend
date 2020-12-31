@@ -34,4 +34,14 @@ img {
   object-fit: contain;
   margin-left: 20px;
 }
+.empty-card-container {
+  width: 100%;
+  margin-top: 40px;
+}
+.empty-card-img {
+  width: 70%;
+  background-color: #fafafa;
+  object-fit: cover;
+  background-size: cover;
+}
 
