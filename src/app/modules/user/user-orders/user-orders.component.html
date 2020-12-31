@@ -1,5 +1,7 @@
 <ng-container>
-  <mat-card>
+  <h2 style="font-size: 2rem;text-align: center; margin-top: 30px">Historique de mes commandes</h2>
+
+  <mat-card style="margin-top: 30px">
     <mat-card-content>
       <div *ngIf="dataSource" class="cartContainer">
         <mat-table [dataSource]="dataSource.orders">
@@ -55,4 +57,9 @@
       </div>
     </mat-card-content>
   </mat-card>
+
+  <button mat-flat-button color="primary" style="text-transform: uppercase; margin-top: 15px" [routerLink]="'/users'">
+    <mat-icon>navigate_before</mat-icon>
+    Retour à mon compte
+  </button>
 </ng-container>

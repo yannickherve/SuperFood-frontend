@@ -38,7 +38,7 @@ export class AddressViewComponent implements OnInit, OnDestroy {
 
   getUserAddress(): void {
     this.showSpinner();
-    this.addressesSubs = this.addressService.getAddress('createdAt:desc', 1, 10).pipe(
+    this.addressesSubs = this.addressService.getAddress('createdAt:desc', 1, 5).pipe(
       map(addressData => this.addresses = addressData)
     ).subscribe(this.addressObserver);
   }
