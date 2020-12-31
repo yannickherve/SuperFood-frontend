@@ -46,11 +46,26 @@
              </mat-radio-button>
            </mat-radio-group>
          </div>
-         <div class="order-details">
-           <h5>Récapitulatif de ma commande</h5>
-           <p>Afficher Article  et prix</p>
-           <p>Mode de paiement</p>
-           <p>Prix total</p>
+         <div class="order-details" *ngIf="carts">
+           <h5>Détails de ma commande</h5>
+           <div fxLayoutAlign="row" *ngFor="let cart of carts.carts" style="margin-top: 30px">
+             <div class="item" fxFlex="60">{{ cart.name }}</div>
+             <div class="price">
+               <strong>{{ cart.price | currency:'EUR':'€' }} X {{ cart.quantity }}</strong>
+             </div>
+           </div>
+           <hr>
+           <div style="background-color: lightgrey; margin-top: 15px">
+             <div fxFlex="60">Livraison en Colissimo</div>
+             <div><strong>Gratuit</strong></div>
+           </div>
+           <div style="background-color: lightgrey; margin-top: 22px">
+             <div fxFlex="60">TOTAL</div>
+             <div>
+               <strong>{{ getTotalPrice() | currency:'EUR':'€' }}</strong>
+             </div>
+           </div>
+
          </div>
          <div class="agree">
            <h5>Veuillez vérifier votre commande avant le paiement !</h5>
