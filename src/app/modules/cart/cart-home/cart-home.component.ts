@@ -18,7 +18,6 @@ export class CartHomeComponent implements OnInit, OnDestroy {
   dataSource: CartServerResponse;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
-
   cartObserver = {
     next: (cart) => {
       setTimeout(() => {
@@ -31,7 +30,6 @@ export class CartHomeComponent implements OnInit, OnDestroy {
       this.spinner.hide();
     }
   };
-
   destroy$ = new Subject<boolean>();
 
   constructor(
@@ -51,6 +49,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
       map( (cartData: CartServerResponse) => this.dataSource = cartData)
     ).subscribe(this.cartObserver);
   }
+
   getTotalPrice(): number {
    return this.helperCartService.getTotalPrice(this.dataSource.carts);
   }

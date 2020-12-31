@@ -25,5 +25,15 @@ export interface Order {
   invoice_id: number;
   invoice_number: string;
   deliveryName: string;
+  createdAt: string;
+  updatedAt: string;
   agree?: string;
+}
+
+export interface OrderServerResponse {
+  orders: Order[];
+  currentPage: number;
+  pages: number;
+  perPage: number;
+  numOfOrders: number;
 }
