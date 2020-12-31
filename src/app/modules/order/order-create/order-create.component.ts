@@ -50,7 +50,7 @@ export class OrderCreateComponent implements OnInit {
         this.addresses = address.addresses;
       },
       error: error => {
-        console.log(error);
+        this.alertService.danger(error);
       }
     };
     this.addressService.getAddress().subscribe(addressObserver);
@@ -63,7 +63,7 @@ export class OrderCreateComponent implements OnInit {
         });
       },
       error: err => {
-        console.log(err);
+        this.alertService.danger(err);
       }
     };
     this.cartService.getCart().pipe(
@@ -78,7 +78,6 @@ export class OrderCreateComponent implements OnInit {
   createOrder(): void {
     const orderObserver = {
       next: order => {
-        console.log(order);
         this.reinitializeCart();
       },
       error: error => {
@@ -96,7 +95,7 @@ export class OrderCreateComponent implements OnInit {
         this.cartService.getCart().subscribe();
       },
       error: err => {
-        console.log(err);
+        this.alertService.danger(err);
       }
     };
     this.carts.carts.forEach(item => {
