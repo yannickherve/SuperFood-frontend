@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
@@ -32,6 +32,20 @@ export class AddressService {
       map((addresses: AddressServerResponse) => {
         return addresses;
       }), catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  /**
+   * Create an address
+   */
+  createUserAddress(address: Address): Observable<Address> {
+    return this.http.post<Address>(this.API_URL + '/addresses', address).pipe(
+      map((addressData: Address) => {
+        return addressData;
+      }),
+      catchError(err => {
         return throwError(err);
       })
     );

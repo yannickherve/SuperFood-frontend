@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AlertService} from '@full-fledged/alerts';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {AddressService} from '../services/address.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-address-create',
   templateUrl: './address-create.component.html',
   styleUrls: ['./address-create.component.scss']
 })
-export class AddressCreateComponent implements OnInit {
+export class AddressCreateComponent implements OnInit, OnDestroy {
   checked = false;
   addressForm = this.fb.group({
     professional: [false, Validators.required],
@@ -22,15 +27,43 @@ export class AddressCreateComponent implements OnInit {
     phone: [null, Validators.required],
     country: [null, Validators.required]
   });
+  createAddressSubs: Subscription;
 
   constructor(
     private fb: FormBuilder,
+    private route: Router,
+    private alertService: AlertService,
+    private spinner: NgxSpinnerService,
+    private addressService: AddressService
   ) { }
 
   ngOnInit(): void {
   }
 
   createAddress(): void {
+    this.spinner.show();
     console.log(this.addressForm.value);
+    const addressObserver = {
+      next: data => {
+        setTimeout(() => {
+          this.spinner.hide();
+          this.alertService.success(
+            'Adresse créée'
+          );
+          this.route.navigate(['/users/addresses']).then(() => {});
+        }, 600);
+      },
+      error: (error) => {
+        this.alertService.danger(error.error.message);
+        this.spinner.hide();
+      }
+    };
+    this.createAddressSubs = this.addressService.createUserAddress(this.addressForm.value).subscribe(addressObserver);
+  }
+
+  ngOnDestroy(): void {
+    if (this.createAddressSubs) {
+      this.createAddressSubs.unsubscribe();
+    }
   }
 }
