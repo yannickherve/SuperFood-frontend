@@ -40,7 +40,7 @@ export class OrderService {
         .set('page', String(page))
         .set('limit', String(limit))
     };
-    return this.http.get(this.API_URL + '/orders', options).pipe(
+    return this.http.get<OrderServerResponse>(this.API_URL + '/orders', options).pipe(
       retry(3), catchError(this.handleError),
       map((orderData: OrderServerResponse) => {
         return orderData;

@@ -22,7 +22,10 @@
         <mat-icon>privacy_tip</mat-icon>
         Mes commandes
       </a>
-      <a mat-list-item >Newsletters</a>
+      <a mat-list-item [routerLink]="['/users/addresses']">
+        <mat-icon>location_on</mat-icon>
+        Mes adresses
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

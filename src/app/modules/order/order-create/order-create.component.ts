@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AddressService} from '../../../shared/services/address.service';
-import {Address} from '../../../shared/models/address';
+import {Address, AddressServerResponse} from '../../address/models/address';
 import {FormBuilder, Validators} from '@angular/forms';
 import {OrderService} from '../services/order.service';
 import {CartService} from '../../cart/services/cart.service';
@@ -8,9 +7,9 @@ import {CartServerResponse} from '../../cart/models/cart.model';
 import {HelperCartService} from '../../cart/services/helper-cart.service';
 import {concatMap, delay, map} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {log} from 'util';
 import {AlertService} from '@full-fledged/alerts';
 import {Router} from '@angular/router';
+import {AddressService} from '../../address/services/address.service';
 
 @Component({
   selector: 'app-order-create',
@@ -18,7 +17,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./order-create.component.scss']
 })
 export class OrderCreateComponent implements OnInit {
-  addresses: Address[];
+  addresses: AddressServerResponse;
   paymentValue: string[] = ['card', 'mandate', 'transfer', 'check'];
   paymentTemporary: string;
   carts: CartServerResponse;
@@ -55,6 +54,7 @@ export class OrderCreateComponent implements OnInit {
     };
     this.addressService.getAddress().subscribe(addressObserver);
   }
+
   retrieveCart(): void {
     const retrieveObserver = {
       next: data => {

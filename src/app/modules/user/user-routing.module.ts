@@ -11,7 +11,11 @@ const routes: Routes = [
     component: DashboardNavigationComponent,
     children: [
       { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard]},
-      {path: 'orders', component: UserOrdersComponent, canActivate: [AuthGuard] }
+      {path: 'orders', component: UserOrdersComponent, canActivate: [AuthGuard] },
+      {
+        path: 'addresses',
+        loadChildren: () => import('../address/address.module').then(m => m.AddressModule)
+      }
     ]
   }
 ];

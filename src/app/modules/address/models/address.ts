@@ -1,4 +1,4 @@
-import {User} from '../../modules/auth/models/user';
+import {User} from '../../auth/models/user';
 
 enum CivilityDirection {
   M = 'M',
@@ -22,7 +22,7 @@ export interface Address {
 }
 
 export interface AddressServerResponse {
-  addresses: Address;
+  addresses: Address[];
   currentPage: number;
   pages: number;
   perPage: number;

@@ -1,0 +1,23 @@
+<ng-container>
+  <h2 style="font-size: 2rem;">Mes adresses</h2>
+  <div class="address-container" fxLayout="row wrap" fxLayout.xs="column"
+       fxLayoutAlign="space-evenly center" *ngIf="addresses">
+    <mat-card *ngFor="let address of addresses.addresses" class="example-card">
+      <mat-card-header>
+        <mat-card-title>{{ address.full_name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>id: {{ address._id }}</p>
+        <p>Civility: {{ address.civility }}</p>
+        <p>{{ address.address1 }}</p>
+        <p>{{ address.city }}, {{ address.postcode }}</p>
+        <p>{{ address.country }}</p>
+        <p>Numéro de téléphone: {{ address.phone }}</p>
+      </mat-card-content>
+      <mat-card-actions style="margin: 5px">
+        <button style="margin: 5px; color: violet" mat-flat-button>Modifier</button>
+        <button style="margin: 5px; color: violet" mat-flat-button >Supprimer</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-container>
