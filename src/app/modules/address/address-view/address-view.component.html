@@ -13,8 +13,8 @@
         <p>id: {{ address._id }}</p>
         <p>Civility: {{ address.civility }}</p>
         <p>Adresse 1 : {{ address.address1 }}</p>
-        <p>Adresse 2 : {{ address?.address2 }}</p>
-        <p *ngIf="address?.company">Compagnie : {{ address?.company }}</p>
+        <p *ngIf="address.address2">Adresse 2 : {{ address?.address2 }}</p>
+        <p *ngIf="address.company">Compagnie : {{ address?.company }}</p>
         <p>{{ address.city }}, {{ address.postcode }}</p>
         <p>{{ address.country }}</p>
         <p>Numéro de téléphone: {{ address.phone }}</p>

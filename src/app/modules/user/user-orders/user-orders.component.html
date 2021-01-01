@@ -49,9 +49,9 @@
 
             <!-- Actions -->
             <ng-container matColumnDef="address">
-              <mat-header-cell *matHeaderCellDef>Addresse</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.address?.full_name ? element.address.full_name : 'l\'Adresse a été supprimée' }},
-                {{ element.address?.address1 ? element.address?.address1 : 'Reprendre avec une adresse valide.'}}
+              <mat-header-cell *matHeaderCellDef>Adresse</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.addressInfos?.full_name ? element.addressInfos.full_name : 'l\'Adresse a été supprimée' }},
+                {{ element.addressInfos?.address1 ? element.addressInfos.address1 : 'Reprendre avec une adresse valide.'}}
               </mat-cell>
             </ng-container>
 
