@@ -12,8 +12,7 @@ import {AlertService} from '@full-fledged/alerts';
   styleUrls: ['./product-home.component.scss']
 })
 export class ProductHomeComponent implements OnInit {
-  @Input() dataSource: ProductServerResponse;
-  // dataSource: ProductServerResponse;
+  dataSource: ProductServerResponse;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
 

@@ -8,10 +8,10 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { ProductHomeComponent } from './product-home/product-home.component';
-import {SharedModule} from '../../shared/shared.module';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {CartModule} from '../cart/cart.module';
 
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -22,9 +22,10 @@ import {CartModule} from '../cart/cart.module';
         ProductItemComponent,
         ProductHomeComponent
     ],
-    exports: [
-        ProductHomeComponent
-    ],
+  exports: [
+    ProductHomeComponent,
+    ProductItemComponent
+  ],
     imports: [
         CommonModule,
         ProductsRoutingModule,

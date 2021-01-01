@@ -1,0 +1,32 @@
+.product-content {
+  overflow: hidden;
+}
+
+mat-card-content {
+  max-height: 100px;
+}
+.example-card {
+  box-shadow: 0 0 5px 1px #dee1e1;
+  max-height: 600px;
+  width: 320px;
+  min-height: 420px;
+  margin: 5px;
+}
+.img-container {
+  width: 250px;
+  height: 250px;
+  //margin: 10px;
+  padding: 10px;
+  //right: 500px;
+}
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin-left: 20px;
+}
+
+.example-header-image {
+  background-image: url('https://source.unsplash.com/1600x900/?product');
+  background-size: cover;
+}

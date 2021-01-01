@@ -11,6 +11,7 @@ import { RestaurantViewComponent } from './restaurant-view/restaurant-view.compo
 import { RestaurantProductsComponent } from './restaurant-products/restaurant-products.component';
 
 import {SharedModule} from '../../shared/shared.module';
+import {ProductsModule} from '../products/products.module';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {SharedModule} from '../../shared/shared.module';
   imports: [
     CommonModule,
     RestaurantsRoutingModule,
-    SharedModule
+    SharedModule,
+    ProductsModule
   ]
 })
 export class RestaurantsModule { }
