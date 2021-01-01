@@ -1,6 +1,8 @@
 <ng-container>
+  <h2 style="font-size: 2rem;text-align: center; margin-top: 30px">Mes informations personnelles</h2>
+
   <div class="profile-container" *ngIf="currentUser">
-    <mat-card class="profile-card mat-elevation-z10">
+    <mat-card class="profile-card mat-elevation-z10" style="padding: 30px">
       <mat-card-header>
         <div mat-card-avatar>
           <img mat-card-image [src]="avatarLink" alt="user image" class="header-image">

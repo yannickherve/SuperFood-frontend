@@ -1,5 +1,5 @@
 import {User} from '../../auth/models/user';
-import {Address} from '../../../shared/models/address';
+import {Address} from '../../address/models/address';
 
 enum StatusDirection {
   Open = 'Open',

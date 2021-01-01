@@ -1,0 +1,41 @@
+<ng-container>
+  <h2 style="font-size: 2rem;">Mes adresses</h2>
+  <div fxLayout="row" fxLayoutAlign="center center" style="margin: 20px">
+    <button routerLink="/users/addresses/address-create" style="width: 40%" mat-flat-button color="primary">Créer une adresse</button>
+  </div>
+  <div class="address-container" fxLayout="row wrap" fxLayout.xs="column"
+       fxLayoutAlign="space-evenly center" *ngIf="addresses">
+    <mat-card *ngFor="let address of addresses.addresses" class="example-card">
+      <mat-card-header>
+        <mat-card-title>{{ address.full_name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>id: {{ address._id }}</p>
+        <p>Civility: {{ address.civility }}</p>
+        <p>Adresse 1 : {{ address.address1 }}</p>
+        <p *ngIf="address.address2">Adresse 2 : {{ address?.address2 }}</p>
+        <p *ngIf="address.company">Compagnie : {{ address?.company }}</p>
+        <p>{{ address.city }}, {{ address.postcode }}</p>
+        <p>{{ address.country }}</p>
+        <p>Numéro de téléphone: {{ address.phone }}</p>
+      </mat-card-content>
+      <hr>
+      <mat-card-actions style="margin: 5px">
+        <button style="margin: 5px; color: violet" mat-flat-button [routerLink]="['/users/addresses/address-edit', address._id]" routerLink="/users/addresses/address-edit">Modifier</button>
+        <button style="margin: 5px; color: violet" mat-flat-button (click)="removeAddress(address._id)">Supprimer</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <mat-paginator *ngIf="addresses"
+                 [length]="addresses.numOfAddress"
+                 [pageSize]="addresses.perPage"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageEvent = $event; onPaginateChange($event)"
+                 showFirstLastButtons>
+  </mat-paginator>
+
+  <button mat-flat-button color="primary" style="text-transform: uppercase; margin-top: 15px" [routerLink]="'/users'">
+    <mat-icon>navigate_before</mat-icon>
+    Retour à mon compte
+  </button>
+</ng-container>

@@ -27,6 +27,7 @@ export interface Order {
   deliveryName: string;
   createdAt: string;
   updatedAt: string;
+  addressInfos: object;
   agree?: string;
 }
 
