@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Address, AddressServerResponse} from '../../address/models/address';
 import {FormBuilder, Validators} from '@angular/forms';
 import {OrderService} from '../services/order.service';
@@ -6,7 +6,7 @@ import {CartService} from '../../cart/services/cart.service';
 import {CartServerResponse} from '../../cart/models/cart.model';
 import {HelperCartService} from '../../cart/services/helper-cart.service';
 import {concatMap, delay, map} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {of, Subscription} from 'rxjs';
 import {AlertService} from '@full-fledged/alerts';
 import {Router} from '@angular/router';
 import {AddressService} from '../../address/services/address.service';
@@ -17,7 +17,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
   templateUrl: './order-create.component.html',
   styleUrls: ['./order-create.component.scss']
 })
-export class OrderCreateComponent implements OnInit {
+export class OrderCreateComponent implements OnInit, OnDestroy {
   addresses: AddressServerResponse;
   paymentValue: string[] = ['card', 'mandate', 'transfer', 'check'];
   paymentTemporary: string;
@@ -28,6 +28,8 @@ export class OrderCreateComponent implements OnInit {
     payment: ['card', Validators.required],
     agree: [null, Validators.required]
   });
+  getUserAddressSubs: Subscription;
+  getCartSubs: Subscription;
 
   constructor(
     private addressService: AddressService,
@@ -54,7 +56,7 @@ export class OrderCreateComponent implements OnInit {
         this.alertService.danger(error);
       }
     };
-    this.addressService.getAddresses().subscribe(addressObserver);
+    this.getUserAddressSubs = this.addressService.getAddresses().subscribe(addressObserver);
   }
 
   retrieveCart(): void {
@@ -70,7 +72,7 @@ export class OrderCreateComponent implements OnInit {
         this.alertService.danger(err);
       }
     };
-    this.cartService.getCart().pipe(
+    this.getCartSubs = this.cartService.getCart().pipe(
       map(cartData => this.carts = cartData)
     ).subscribe(retrieveObserver);
   }
@@ -98,7 +100,7 @@ export class OrderCreateComponent implements OnInit {
         this.alertService.success('La commande a été effectuée');
         this.spinner.hide();
         this.route.navigate(['/products-center/products']).then(() => {});
-        this.cartService.getCart().subscribe();
+        this.getCartSubs = this.cartService.getCart().subscribe();
       },
       error: err => {
         this.alertService.danger(err);
@@ -110,5 +112,14 @@ export class OrderCreateComponent implements OnInit {
         concatMap(() => this.cartService.removeFromCart(item._id))
       ).subscribe(deleteObserver);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.getUserAddressSubs) {
+      this.getUserAddressSubs.unsubscribe();
+    }
+    if (this.getCartSubs) {
+      this.getCartSubs.unsubscribe();
+    }
   }
 }
