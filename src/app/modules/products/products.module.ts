@@ -14,14 +14,17 @@ import {CartModule} from '../cart/cart.module';
 
 
 @NgModule({
-  declarations: [
-    ProductListComponent,
-    ProductViewComponent,
-    ProductEditComponent,
-    ProductAddComponent,
-    ProductItemComponent,
-    ProductHomeComponent
-  ],
+    declarations: [
+        ProductListComponent,
+        ProductViewComponent,
+        ProductEditComponent,
+        ProductAddComponent,
+        ProductItemComponent,
+        ProductHomeComponent
+    ],
+    exports: [
+        ProductHomeComponent
+    ],
     imports: [
         CommonModule,
         ProductsRoutingModule,

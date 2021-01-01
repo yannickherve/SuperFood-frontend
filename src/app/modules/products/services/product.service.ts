@@ -32,8 +32,7 @@ export class ProductService {
   }
 
   getProduct(productId: string): Observable<Product> {
-    // @ts-ignore
-    return this.http.get<ServerResponse>(this.API_URL + '/products/' + productId);
+    return this.http.get<Product>(this.API_URL + '/products/' + productId);
   }
 
   handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {

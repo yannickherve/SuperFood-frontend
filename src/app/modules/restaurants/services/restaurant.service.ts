@@ -4,6 +4,8 @@ import {Observable, throwError} from 'rxjs';
 import {RestaurantServerResponse} from '../models/restaurant';
 import {environment} from '../../../../environments/environment';
 import {catchError, map, retry} from 'rxjs/operators';
+import {Address} from '../../address/models/address';
+import {Product, ProductServerResponse} from '../../products/models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class RestaurantService {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  getRestaurants(sortBy: string, page: number, limit: number, name?: string): Observable<RestaurantServerResponse> {
+  getRestaurants(sortBy?: string, page?: number, limit?: number, name?: string): Observable<RestaurantServerResponse> {
     const options = {
       params: new HttpParams()
         .set('sortBy', sortBy)
@@ -45,6 +47,17 @@ export class RestaurantService {
       retry(3), catchError(this.handleError),
       map((restaurantData: RestaurantServerResponse) => {
         return restaurantData;
+      }), catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getProductsByRestaurant(restaurantId: string): Observable<ProductServerResponse> {
+    return this.http.get<ProductServerResponse>(this.API_URL + '/products/restaurant/' + restaurantId).pipe(
+      retry(3), catchError(this.handleError),
+      map((products: ProductServerResponse) => {
+        return products;
       }), catchError(err => {
         return throwError(err);
       })
