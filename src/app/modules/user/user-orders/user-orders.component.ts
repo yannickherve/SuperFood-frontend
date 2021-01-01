@@ -20,7 +20,6 @@ export class UserOrdersComponent implements OnInit, OnDestroy {
   pageEvent: PageEvent;
   orderObserver = {
     next: order => {
-      console.log(order);
       this.spinner.hide();
     },
     error: err => {
