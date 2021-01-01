@@ -1,3 +1,42 @@
 <ng-container>
-  <app-product-item [dataSource]="products"></app-product-item>
+  <ng-container *ngIf="products">
+    <div *ngIf="products.numOfProducts === 0 else showItemBlock" style="margin-top: 70px">
+
+      <div style="min-width: 60%" fxLayout="row" fxLayoutAlign="center center">
+        <mat-card style="width: 60%">
+          <mat-card-content>
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <h2 style="font-size: 2rem;text-align: center; margin-top: 30px">Aucun menu enregistré.</h2>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button color="primary" (click)="back()">
+              <mat-icon>reply</mat-icon>
+              RETOUR
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #showItemBlock>
+    <app-product-item [dataSource]="products"></app-product-item>
+
+    <mat-paginator *ngIf="products"
+                   [length]="products.numOfProducts"
+                   [pageSize]="products.perPage"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageEvent = $event; onPaginateChange($event)"
+                   showFirstLastButtons>
+    </mat-paginator>
+
+    <div fxLayout="row" fxLayoutAlign="center center" style="padding-bottom: 30px">
+      <button color="primary" mat-flat-button [routerLink]="['/restaurants-center']">
+        <mat-icon>reply</mat-icon>
+        RETOUR AUX RESTAURANTS
+      </button>
+    </div>
+  </ng-template>
+
 </ng-container>

@@ -53,8 +53,14 @@ export class RestaurantService {
     );
   }
 
-  getProductsByRestaurant(restaurantId: string): Observable<ProductServerResponse> {
-    return this.http.get<ProductServerResponse>(this.API_URL + '/products/restaurant/' + restaurantId).pipe(
+  getProductsByRestaurant(restaurantId: string, sortBy?: string, page?: number, limit?: number): Observable<ProductServerResponse> {
+    const options = {
+      params: new HttpParams()
+        .set('sortBy', sortBy)
+        .set('page', String(page))
+        .set('limit', String(limit))
+    };
+    return this.http.get<ProductServerResponse>(this.API_URL + '/products/restaurant/' + restaurantId, options).pipe(
       retry(3), catchError(this.handleError),
       map((products: ProductServerResponse) => {
         return products;
