@@ -8,22 +8,27 @@ import { RestaurantEditComponent } from './restaurant-edit/restaurant-edit.compo
 import { RestaurantHomeComponent } from './restaurant-home/restaurant-home.component';
 import { RestaurantItemComponent } from './restaurant-item/restaurant-item.component';
 import { RestaurantViewComponent } from './restaurant-view/restaurant-view.component';
+import { RestaurantProductsComponent } from './restaurant-products/restaurant-products.component';
+
 import {SharedModule} from '../../shared/shared.module';
+import {ProductsModule} from '../products/products.module';
 
 
 @NgModule({
   declarations: [
+    RestaurantHomeComponent,
     RestaurantListComponent,
     RestaurantAddComponent,
     RestaurantEditComponent,
-    RestaurantHomeComponent,
     RestaurantItemComponent,
-    RestaurantViewComponent
+    RestaurantViewComponent,
+    RestaurantProductsComponent
   ],
   imports: [
     CommonModule,
     RestaurantsRoutingModule,
-    SharedModule
+    SharedModule,
+    ProductsModule
   ]
 })
 export class RestaurantsModule { }

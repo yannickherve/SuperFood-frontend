@@ -35,10 +35,11 @@ export class RestaurantHomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.lodRestaurants();
+    this.loadRestaurants();
   }
 
-  lodRestaurants(): void {
+  loadRestaurants(): void {
+    this.showSpinner();
     this.restaurantService.getRestaurants('createdAt:desc', 1, 10).pipe(
       map((restaurantsData => this.dataSource = restaurantsData))
     ).subscribe(this.restaurantsObserver);

@@ -20,7 +20,7 @@
         <p><strong>Description:</strong> {{ restaurant.description }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button color="primary" mat-flat-button>VOIR</button>
+        <button color="primary" mat-flat-button [routerLink]="['/restaurants-center/restaurant-menu', restaurant._id]">VOIR</button>
       </mat-card-actions>
     </mat-card>
   </div>

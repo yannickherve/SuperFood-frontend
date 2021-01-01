@@ -118,8 +118,5 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     if (this.getUserAddressSubs) {
       this.getUserAddressSubs.unsubscribe();
     }
-    if (this.getCartSubs) {
-      this.getCartSubs.unsubscribe();
-    }
   }
 }

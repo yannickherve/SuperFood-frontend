@@ -11,7 +11,7 @@
         <p>Statut restaurant: {{ product.restaurant.status }}.</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-flat-button color="primary" [routerLink]="['/products-center/products']">
+        <button mat-flat-button color="primary" (click)="back()">
           <mat-icon>reply</mat-icon>
           Retour à la liste
         </button>

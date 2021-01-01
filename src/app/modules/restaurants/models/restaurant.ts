@@ -20,7 +20,7 @@ export interface Restaurant {
 }
 
 export interface RestaurantServerResponse {
-  restaurants: Restaurant;
+  restaurants: Restaurant[];
   currentPage: number;
   pages: number;
   perPage: number;
