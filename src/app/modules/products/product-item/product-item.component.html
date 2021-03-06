@@ -14,7 +14,7 @@
       <p>Prix: {{ product.price  | currency:'EUR':'€' }}.</p>
     </mat-card-content>
     <mat-card-actions>
-      <button [routerLink]="['/products-center/product-view', product._id]" mat-flat-button color="primary">Détails du plat</button>
+      <button [routerLink]="['/products-center/product-view', product._id]" mat-flat-button color="primary">Détails</button>
       <app-cart-button-widget [product]="product"></app-cart-button-widget>
     </mat-card-actions>
   </mat-card>

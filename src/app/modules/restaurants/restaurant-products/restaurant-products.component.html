@@ -1,6 +1,12 @@
 <ng-container>
+<!--  <header class="restaurant-infos">-->
+<!--    <img [src]="restaurant?.image" alt="Photo du restaurant"  class="img-container">-->
+<!--  </header>-->
+  <div *ngIf="restaurant" class="header-restaurant"
+       [ngStyle]="{'background': 'linear-gradient(to bottom, #000, 30%, #0005), center top / cover url(' + restaurant?.image + ') fixed'}">
+  </div>
   <ng-container *ngIf="products">
-    <div *ngIf="products.numOfProducts === 0 else showItemBlock" style="margin-top: 70px">
+    <div *ngIf="products.numOfProducts === 0 else showItemBlock" style="margin: 70px">
 
       <div style="min-width: 60%" fxLayout="row" fxLayoutAlign="center center">
         <mat-card style="width: 60%">

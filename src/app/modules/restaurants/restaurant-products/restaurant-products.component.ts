@@ -8,6 +8,7 @@ import {ProductServerResponse} from '../../products/models/product.model';
 import {Subscription} from 'rxjs';
 import {PageEvent} from '@angular/material/paginator';
 import {Location} from '@angular/common';
+import {Restaurant, RestaurantServerResponse} from '../models/restaurant';
 
 @Component({
   selector: 'app-restaurant-products',
@@ -16,12 +17,12 @@ import {Location} from '@angular/common';
 })
 export class RestaurantProductsComponent implements OnInit, OnDestroy {
   products: ProductServerResponse;
+  restaurant: Restaurant;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   loadRestaurantProductsSubs: Subscription;
   productsObserver = {
     next: (data) => {
-      console.log(data);
       setTimeout(() => {
         this.spinner.hide();
       }, 600);
@@ -41,6 +42,7 @@ export class RestaurantProductsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.loadRestaurant();
     this.loadRestaurantProducts();
   }
 
@@ -67,6 +69,13 @@ export class RestaurantProductsComponent implements OnInit, OnDestroy {
 
   back(): void {
     this.location.back();
+  }
+
+  loadRestaurant(): void {
+    const restaurantId = this.route.snapshot.paramMap.get('id');
+    this.restaurantService.getRestaurant(restaurantId).pipe(
+      map((restaurantsData => this.restaurant = restaurantsData))
+    ).subscribe();
   }
 
   ngOnDestroy(): void {

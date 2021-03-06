@@ -10,7 +10,6 @@
     </a>
     <div fxLayout="row" fxShow.gt-xs>
       <button mat-button>A propos</button>
-      <button mat-button>Contact</button>
     </div>
   </div>
   <div fxFlex fxHide.gt-xs fxLayout="row" fxLayoutAlign="flex-end">
@@ -20,17 +19,20 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button [routerLink]="['/users']" mat-menu-item>
             <mat-icon>dialpad</mat-icon>
-            <span>Redial</span>
+            <span *ngIf="isUser">User Dashboard</span>
           </button>
-          <button disabled mat-menu-item>
-            <mat-icon>voicemail</mat-icon>
-            <span>Check voice mail</span>
+          <button *ngIf="cartServer$ | async as cartServe" mat-menu-item>
+            <span *ngIf="isAuthorized" [matBadge]="cartServe.numOfCarts" [routerLink]="['/cart-center']" matBadgeColor="warn"
+                  matBadgePosition="before" matBadgeSize="small">
+              <mat-icon>shopping_cart</mat-icon>
+            Panier
+          </span>
           </button>
-          <button mat-menu-item>
-            <mat-icon>notifications_off</mat-icon>
-            <span>Disable alerts</span>
+          <button mat-menu-item (click)="onLogout()" *ngIf="isAuthorized" >
+            <mat-icon>eject</mat-icon>
+            <span>Déconnexion</span>
           </button>
         </mat-menu>
 
@@ -39,19 +41,19 @@
   </div>
   <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end">
     <mat-nav-list class="sidenav-content-list" fxLayout>
-      <a [routerLink]="['/users']" mat-list-item *ngIf="isUser">User Dashboard</a>
-      <a [routerLink]="['/moderator']" mat-list-item *ngIf="isModerator">Moderator</a>
-      <a [routerLink]="['/auth/login']" mat-list-item routerLinkActive="active" *ngIf="!isAuthorized">Login</a>
-      <a [routerLink]="['/auth/signup']" mat-list-item routerLinkActive="active" *ngIf="!isAuthorized">Inscription</a>
-      <div class="shopping-cart-link-container" *ngIf="cartServer$ | async as cartServe">
-        <a [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active" *ngIf="isAuthorized">
-          <span [matBadge]="cartServe.numOfCarts" matBadgePosition="before" matBadgeSize="small" matBadgeColor="warn">
+      <a *ngIf="isUser" [routerLink]="['/users']" mat-list-item>User Dashboard</a>
+      <a *ngIf="isModerator" [routerLink]="['/moderator']" mat-list-item>Moderator</a>
+      <a *ngIf="!isAuthorized" [routerLink]="['/auth/login']" mat-list-item routerLinkActive="active">Login</a>
+      <a *ngIf="!isAuthorized" [routerLink]="['/auth/signup']" mat-list-item routerLinkActive="active">Inscription</a>
+      <div *ngIf="cartServer$ | async as cartServe" class="shopping-cart-link-container">
+        <a *ngIf="isAuthorized" [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active">
+          <span [matBadge]="cartServe.numOfCarts" matBadgeColor="warn" matBadgePosition="before" matBadgeSize="small">
             <mat-icon>shopping_cart</mat-icon>
           </span>
-            Panier
+          Panier
         </a>
       </div>
-      <a (click)="onLogout()" mat-list-item routerLinkActive="active" *ngIf="isAuthorized">Logout</a>
+      <a (click)="onLogout()" *ngIf="isAuthorized" mat-list-item routerLinkActive="active">Déconnexion</a>
     </mat-nav-list>
   </div>
 </mat-toolbar>

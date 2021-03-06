@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
   cartServer$: Observable<CartServerResponse>;
   cart: CartServerResponse;
-  cartChanged: Observable<CartServerResponse>;
 
   constructor(
     private authService: AuthService,
