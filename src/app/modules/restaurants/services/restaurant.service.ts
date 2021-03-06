@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {RestaurantServerResponse} from '../models/restaurant';
+import {Restaurant, RestaurantServerResponse} from '../models/restaurant';
 import {environment} from '../../../../environments/environment';
 import {catchError, map, retry} from 'rxjs/operators';
 import {Address} from '../../address/models/address';
@@ -29,6 +29,17 @@ export class RestaurantService {
       retry(3), catchError(this.handleError),
       map((restaurantData: RestaurantServerResponse) => {
         return restaurantData;
+      }), catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getRestaurant(restaurantId: string): Observable<Restaurant> {
+    return this.http.get<Restaurant>(this.API_URL + '/restaurants/' + restaurantId).pipe(
+      retry(3), catchError(this.handleError),
+      map((restaurant: Restaurant) => {
+        return restaurant;
       }), catchError(err => {
         return throwError(err);
       })
