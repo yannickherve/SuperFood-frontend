@@ -19,7 +19,7 @@ export class SignupComponent implements OnInit {
     age: [null, Validators.compose([
       Validators.minLength(0), Validators.maxLength(3)])
     ],
-    role: ['0', Validators.required],
+    role: ['user', Validators.required],
     phone: null,
     address: [null, Validators.required],
     avatar: null,

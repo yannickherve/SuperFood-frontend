@@ -45,7 +45,7 @@
       <a *ngIf="!isAuthorized" [routerLink]="['/auth/login']" mat-list-item routerLinkActive="active">Login</a>
       <a *ngIf="!isAuthorized" [routerLink]="['/auth/signup']" mat-list-item routerLinkActive="active">Inscription</a>
       <div *ngIf="cartServer$ | async as cartServe" class="shopping-cart-link-container">
-        <a *ngIf="isAuthorized" [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active">
+        <a *ngIf="isAuthorized && isUser" [routerLink]="['/cart-center']" mat-list-item routerLinkActive="active">
           <span [matBadge]="cartServe.numOfCarts" matBadgeColor="warn" matBadgePosition="before" matBadgeSize="small">
             <mat-icon>shopping_cart</mat-icon>
           </span>
