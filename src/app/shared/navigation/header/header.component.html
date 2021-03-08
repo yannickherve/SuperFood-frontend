@@ -41,7 +41,7 @@
   <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end">
     <mat-nav-list class="sidenav-content-list" fxLayout>
       <a *ngIf="isUser" [routerLink]="['/users']" mat-list-item>User Dashboard</a>
-      <a *ngIf="isModerator" [routerLink]="['/moderator']" mat-list-item>Moderator</a>
+      <a *ngIf="isModerator" [routerLink]="['/moderator']" mat-list-item>Moderator Dashboard</a>
       <a *ngIf="!isAuthorized" [routerLink]="['/auth/login']" mat-list-item routerLinkActive="active">Login</a>
       <a *ngIf="!isAuthorized" [routerLink]="['/auth/signup']" mat-list-item routerLinkActive="active">Inscription</a>
       <div *ngIf="cartServer$ | async as cartServe" class="shopping-cart-link-container">
