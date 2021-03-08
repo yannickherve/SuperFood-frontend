@@ -44,7 +44,7 @@ export class UserProfileComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data =  this.currentUser;
-    dialogConfig.width = '450px';
+    dialogConfig.width = '650px';
 
     const dialogRef = this.dialog.open(UpdateUserDialogComponent, dialogConfig);
 

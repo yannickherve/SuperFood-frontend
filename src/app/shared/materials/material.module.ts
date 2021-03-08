@@ -51,7 +51,11 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatRadioModule,
     MatMenuModule,
     MatExpansionModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   exports: [
     MatBadgeModule,
