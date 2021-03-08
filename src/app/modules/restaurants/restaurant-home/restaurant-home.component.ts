@@ -23,7 +23,7 @@ export class RestaurantHomeComponent implements OnInit {
       }, 600);
     },
     error: (error) => {
-      this.alertService.danger(error.error.message);
+      this.alertService.danger(error);
       this.spinner.hide();
     }
   };
@@ -38,11 +38,18 @@ export class RestaurantHomeComponent implements OnInit {
     this.loadRestaurants();
   }
 
+  // Load restaurants
   loadRestaurants(): void {
     this.showSpinner();
     this.restaurantService.getRestaurants('createdAt:desc', 1, 10).pipe(
       map((restaurantsData => this.dataSource = restaurantsData))
     ).subscribe(this.restaurantsObserver);
+
+    if (this.dataSource === undefined) {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 600);
+    }
   }
 
   // Listen paginate change

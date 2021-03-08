@@ -5,7 +5,7 @@
   <div *ngIf="restaurant" class="header-restaurant"
        [ngStyle]="{'background': 'linear-gradient(to bottom, #000, 30%, #0005), center top / cover url(' + restaurant?.image + ') fixed'}">
   </div>
-  <ng-container *ngIf="products">
+  <ng-container *ngIf="products else noProducts">
     <div *ngIf="products.numOfProducts === 0 else showItemBlock" style="margin: 70px">
 
       <div style="min-width: 60%" fxLayout="row" fxLayoutAlign="center center">
@@ -26,8 +26,16 @@
     </div>
   </ng-container>
 
-  <ng-template #showItemBlock>
-    <app-product-item [dataSource]="products"></app-product-item>
+  <ng-template #noProducts>
+    <div style="text-align: center;margin-top: 50px">
+      <h2>Un problème est survenu lors de la récupération des données</h2>
+    </div>
+  </ng-template>
+
+  <ng-template  #showItemBlock>
+    <div style="margin-top: 70px; margin-bottom: 20px">
+      <app-product-item [dataSource]="products"></app-product-item>
+    </div>
 
     <mat-paginator *ngIf="products"
                    [length]="products.numOfProducts"
