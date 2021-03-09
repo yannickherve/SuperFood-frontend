@@ -4,6 +4,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {FormBuilder, Validators} from '@angular/forms';
 import {UpdateUserDialogComponent} from '../../../shared/dialogs/update-user-dialog/update-user-dialog.component';
 import {AlertService} from '@full-fledged/alerts';
+import {environment} from '../../../../environments/environment';
+import {log} from 'util';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,6 +15,7 @@ import {AlertService} from '@full-fledged/alerts';
 export class UserProfileComponent implements OnInit {
   currentUser: any = {};
   avatarLink: string;
+  avatarLinkEnv = environment.avatarLink;
 
   constructor(
     private authService: AuthService,
@@ -28,7 +31,7 @@ export class UserProfileComponent implements OnInit {
     const userObserver = {
       next: data => {
         this.currentUser = data;
-        this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
+        this.avatarLink = this.avatarLinkEnv + data._id + '/avatar';
       },
       error: error => {
         this.alertService.danger(error.error.message);
@@ -44,7 +47,8 @@ export class UserProfileComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data =  this.currentUser;
-    dialogConfig.width = '650px';
+    dialogConfig.width = '750px';
+    dialogConfig.height = '100%';
 
     const dialogRef = this.dialog.open(UpdateUserDialogComponent, dialogConfig);
 

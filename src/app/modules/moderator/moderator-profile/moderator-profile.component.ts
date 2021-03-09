@@ -28,11 +28,12 @@ export class ModeratorProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getUserData();
   }
+
   getUserData(): void {
     const userObserver = {
       next: data => {
         this.currentUser = data;
-        this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
+        this.avatarLink = this.avatarLinkEnv + data._id + '/avatar';
       },
       error: error => {
         this.alertService.danger(error.error.message);
@@ -48,7 +49,8 @@ export class ModeratorProfileComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data =  this.currentUser;
-    dialogConfig.width = '450px';
+    dialogConfig.width = '750px';
+    dialogConfig.height = '100%';
 
     const dialogRef = this.dialog.open(UpdateUserDialogComponent, dialogConfig);
 
@@ -66,35 +68,6 @@ export class ModeratorProfileComponent implements OnInit {
         this.authService.updateUser(result).subscribe(updateObserver);
       }
     });
-  }
-
-  uploadFileEvt(imgFile: any): void {
-    if (imgFile.target.files && imgFile.target.files[0]) {
-      this.fileAttr = '';
-      Array.from(imgFile.target.files).forEach((file: File) => {
-        this.fileAttr += file.name + ' - ';
-      });
-      console.log(imgFile.target.files);
-      console.log(imgFile.target);
-
-      // HTML5 FileReader API
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const image = new Image();
-        image.src = e.target.result;
-        image.onload = rs => {
-          const imgBase64Path = e.target.result;
-        };
-        console.log(image);
-
-      };
-      reader.readAsDataURL(imgFile.target.files[0]);
-
-      // Reset if duplicate image uploaded again
-      this.fileInput.nativeElement.value = '';
-    } else {
-      this.fileAttr = 'Choose File';
-    }
   }
 
 }

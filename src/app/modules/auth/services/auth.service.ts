@@ -101,10 +101,10 @@ export class AuthService {
   }
 
   getUserAvatar(id: string): Observable<any>  {
-    return this.http.get(this.API_URL + '/users/' + id + '/avatar', {responseType: 'arraybuffer'}).pipe(
+    return this.http.get(this.API_URL + '/users/' + id + '/avatar').pipe(
       map(res => {
-        const blob = new Blob([res], {type: 'image/png'});
-        return (window.URL || window.webkitURL).createObjectURL(blob);
+        // const blob = new Blob([res], {type: 'image/png'});
+        // return (window.URL || window.webkitURL).createObjectURL(blob);
       })
     );
   }
