@@ -55,9 +55,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatBadgeModule,
     MatIconModule,
     MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   exports: [
     MatBadgeModule,
@@ -84,7 +82,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ]
 })
 export class MaterialModule { }

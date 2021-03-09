@@ -81,6 +81,10 @@ export class RestaurantService {
     );
   }
 
+  createRestaurant(formData: FormData): Observable<any> {
+    return this.http.post<FormData>(this.API_URL + '/restaurants', formData);
+  }
+
   handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

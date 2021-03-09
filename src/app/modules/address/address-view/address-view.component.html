@@ -1,10 +1,17 @@
 <ng-container>
   <h2 style="font-size: 2rem;">Mes adresses</h2>
   <div fxLayout="row" fxLayoutAlign="center center" style="margin: 20px">
-    <button routerLink="/users/addresses/address-create" style="width: 40%" mat-flat-button color="primary">Créer une adresse</button>
+    <button *ngIf="!isModerator" color="primary" mat-flat-button routerLink="/users/addresses/address-create"
+            style="width: 40%">
+      Créer une adresse
+    </button>
+    <button *ngIf="isModerator" color="primary" mat-flat-button routerLink="/moderator/addresses/address-create"
+            style="width: 40%">
+      Créer une adresse
+    </button>
   </div>
-  <div class="address-container" fxLayout="row wrap" fxLayout.xs="column"
-       fxLayoutAlign="space-evenly center" *ngIf="addresses">
+  <div *ngIf="addresses" class="address-container" fxLayout="row wrap"
+       fxLayout.xs="column" fxLayoutAlign="space-evenly center">
     <mat-card *ngFor="let address of addresses.addresses" class="example-card">
       <mat-card-header>
         <mat-card-title>{{ address.full_name }}</mat-card-title>
@@ -21,20 +28,28 @@
       </mat-card-content>
       <hr>
       <mat-card-actions style="margin: 5px">
-        <button style="margin: 5px; color: violet" mat-flat-button [routerLink]="['/users/addresses/address-edit', address._id]" routerLink="/users/addresses/address-edit">Modifier</button>
-        <button style="margin: 5px; color: violet" mat-flat-button (click)="removeAddress(address._id)">Supprimer</button>
+        <button [routerLink]="['/users/addresses/address-edit', address._id]" mat-flat-button
+                routerLink="/users/addresses/address-edit"
+                style="margin: 5px; color: violet">Modifier
+        </button>
+        <button (click)="removeAddress(address._id)" mat-flat-button style="margin: 5px; color: violet">Supprimer
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>
-  <mat-paginator *ngIf="addresses"
+  <mat-paginator (page)="pageEvent = $event; onPaginateChange($event)"
+                 *ngIf="addresses"
                  [length]="addresses.numOfAddress"
-                 [pageSize]="addresses.perPage"
                  [pageSizeOptions]="pageSizeOptions"
-                 (page)="pageEvent = $event; onPaginateChange($event)"
+                 [pageSize]="addresses.perPage"
                  showFirstLastButtons>
   </mat-paginator>
 
-  <button mat-flat-button color="primary" style="text-transform: uppercase; margin-top: 15px" [routerLink]="'/users'">
+  <button *ngIf="!isModerator" [routerLink]="'/users'" color="primary" mat-flat-button style="text-transform: uppercase; margin-top: 15px">
+    <mat-icon>navigate_before</mat-icon>
+    Retour à mon compte
+  </button>
+  <button *ngIf="isModerator" [routerLink]="'/moderator'" color="primary" mat-flat-button style="text-transform: uppercase; margin-top: 15px">
     <mat-icon>navigate_before</mat-icon>
     Retour à mon compte
   </button>

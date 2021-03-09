@@ -6,6 +6,8 @@ import {Subscription} from 'rxjs';
 import {PageEvent} from '@angular/material/paginator';
 import {map} from 'rxjs/operators';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {Role} from '../../auth/models/role';
+import {AuthService} from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-address-view',
@@ -30,6 +32,7 @@ export class AddressViewComponent implements OnInit, OnDestroy {
     private addressService: AddressService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -89,4 +92,9 @@ export class AddressViewComponent implements OnInit, OnDestroy {
     };
     this.addressService.deleteAddress(addressId).subscribe(deleteObserver);
   }
+
+  get isModerator(): boolean {
+    return this.authService.hasRole(Role.moderator);
+  }
+
 }
