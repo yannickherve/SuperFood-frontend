@@ -54,7 +54,6 @@ export class RestaurantProductsComponent implements OnInit, OnDestroy {
   }
 
   onPaginateChange(event: PageEvent): void {
-    // this.showSpinner();
     const defaultSort = 'createdAt:desc';
     let page = event.pageIndex;
     const limit = event.pageSize;

@@ -26,7 +26,7 @@ export class RestaurantService {
         .set('limit', String(limit))
     };
     return this.http.get<RestaurantServerResponse>(this.API_URL + '/restaurants', options).pipe(
-      retry(3), catchError(this.handleError),
+      retry(2), catchError(this.handleError),
       map((restaurantData: RestaurantServerResponse) => {
         return restaurantData;
       }), catchError(err => {

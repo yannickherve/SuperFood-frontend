@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {AuthService} from '../../auth/services/auth.service';
 import {Router} from '@angular/router';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard-navigation',
@@ -14,6 +15,7 @@ export class DashboardNavigationComponent implements OnInit{
   currentUser: any = {};
   avatar: any;
   avatarLink: string;
+  avatarLinkEnv = environment.avatarLink;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -34,8 +36,7 @@ export class DashboardNavigationComponent implements OnInit{
     const userObserver = {
       next: data => {
         this.currentUser = data;
-        this.avatarLink = 'http://localhost:4000/users/' + data._id + '/avatar';
-
+        this.avatarLink = this.avatarLinkEnv + data._id + '/avatar';
       },
       error: error => {
         // console.log(error);

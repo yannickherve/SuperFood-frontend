@@ -42,10 +42,6 @@ const routes: Routes = [
         path: 'order-center',
         loadChildren: () => import('./modules/order/order.module').then(m => m.OrderModule)
       },
-      {
-        path: 'moderator',
-        loadChildren: () => import('./modules/moderator/moderator.module').then(m => m.ModeratorModule)
-      }
     ],
   },
   {
@@ -56,6 +52,10 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+  },
+  {
+    path: 'moderator',
+    loadChildren: () => import('./modules/moderator/moderator.module').then(m => m.ModeratorModule)
   }
 ];
 

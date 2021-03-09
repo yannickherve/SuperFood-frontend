@@ -24,6 +24,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -51,7 +52,12 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatRadioModule,
     MatMenuModule,
     MatExpansionModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatProgressBarModule
   ],
   exports: [
     MatBadgeModule,
@@ -77,7 +83,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatProgressSpinnerModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://api-superfood.geomaniadevs.com/'
+  baseUrl: 'http://api-superfood.geomaniadevs.com/',
+  avatarLink: 'http://api-superfood.geomaniadevs.com/'
 };

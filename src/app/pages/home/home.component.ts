@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../modules/auth/services/auth.service';
 import {Router} from '@angular/router';
 import {MatSidenav} from '@angular/material/sidenav';
+import {Role} from '../../modules/auth/models/role';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomeComponent implements OnInit {
 
   reason = '';
 
-  url = 'assets/img/foodiesfeed.com_tacos-with-pulled-pork-fresh-vegetables-and-cream.jpg';
+  url = 'assets/img/home_intro_img.jpg';
+  urlModerator = 'assets/img/moderator_home.jpg';
 
   close(reason: string): void {
     this.reason = reason;
@@ -36,6 +38,10 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
     });
+  }
+
+  get isModerator(): boolean {
+    return this.authService.hasRole(Role.moderator);
   }
 
 }
