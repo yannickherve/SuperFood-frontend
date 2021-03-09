@@ -26,7 +26,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
       }, 700);
     },
     error: (error) => {
-      this.alertService.danger('Connectez vous svp');
+      this.alertService.danger('Problème de connexion et/ou \n problème API');
       this.spinner.hide();
     }
   };
@@ -48,6 +48,12 @@ export class CartHomeComponent implements OnInit, OnDestroy {
     this.cartService.getCart('createdAt:desc', 1, 5).pipe(
       map( (cartData: CartServerResponse) => this.dataSource = cartData)
     ).subscribe(this.cartObserver);
+
+    if (this.dataSource === undefined) {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 600);
+    }
   }
 
   getTotalPrice(): number {

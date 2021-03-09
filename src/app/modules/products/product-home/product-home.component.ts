@@ -54,6 +54,12 @@ export class ProductHomeComponent implements OnInit {
     this.productService.getProducts('createdAt:desc', 1, 10).pipe(
       map(productsData => this.dataSource = productsData)
     ).subscribe(this.productsObserver);
+
+    if (this.dataSource === undefined) {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 600);
+    }
   }
   // Paginate change
   onPaginateChange(event: PageEvent): void {

@@ -1,5 +1,5 @@
 <div class="container">
-  <ng-container *ngIf="dataSource">
+  <ng-container *ngIf="dataSource else noCart">
     <div *ngIf="dataSource.numOfCarts === 0 else showCartBlock">
       <div class="empty-card-container">
         <img src="assets/img/shopping-cart.svg" alt="cart-box" class="empty-card-img">
@@ -14,6 +14,13 @@
       </div>
     </div>
   </ng-container>
+
+  <ng-template #noCart>
+    <div style="text-align: center;margin-top: 50px">
+      <h2>Un problème est survenu lors de la récupération du panier</h2>
+    </div>
+  </ng-template>
+
   <ng-template #showCartBlock>
     <div *ngIf="dataSource" class="cartContainer">
       <mat-table [dataSource]="dataSource.carts" class="mat-elevation-z8">
