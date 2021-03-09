@@ -10,7 +10,7 @@
       Créer une adresse
     </button>
   </div>
-  <div *ngIf="addresses" class="address-container" fxLayout="row wrap"
+  <div *ngIf="addresses" class="address-container" fxLayout="row wrap" style="margin-bottom: 25px"
        fxLayout.xs="column" fxLayoutAlign="space-evenly center">
     <mat-card *ngFor="let address of addresses.addresses" class="example-card">
       <mat-card-header>

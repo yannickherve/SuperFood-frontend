@@ -94,6 +94,7 @@ export class CartHomeComponent implements OnInit, OnDestroy {
     );
   }
 
+  // load data if page change
   onPaginateChange(event: PageEvent): void {
     this.showSpinner();
     const defaultSort = 'createdAt:desc';

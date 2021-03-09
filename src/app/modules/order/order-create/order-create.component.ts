@@ -85,7 +85,9 @@ export class OrderCreateComponent implements OnInit, OnDestroy {
     this.spinner.show();
     const orderObserver = {
       next: order => {
-        this.reinitializeCart();
+        setTimeout(() => {
+          this.reinitializeCart();
+        }, 600);
       },
       error: error => {
         this.alertService.danger(error);

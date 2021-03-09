@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
@@ -15,7 +15,7 @@ import {RestaurantService} from '../services/restaurant.service';
   templateUrl: './restaurant-add.component.html',
   styleUrls: ['./restaurant-add.component.scss']
 })
-export class RestaurantAddComponent implements OnInit {
+export class RestaurantAddComponent implements OnInit, OnDestroy {
   restaurantForm = this.fb.group({
     name: [null, Validators.compose([
       Validators.minLength(3)])
@@ -45,7 +45,7 @@ export class RestaurantAddComponent implements OnInit {
     this.getUserAddresses();
   }
 
-  // Create restaurant by key value formData
+  // Create restaurant with key value formData method
   createRestaurant(): void  {
     this.showSpinner();
     const formData = new FormData();
@@ -65,7 +65,7 @@ export class RestaurantAddComponent implements OnInit {
         this.alertService.danger(error);
       }
     };
-    this.restaurantService.createRestaurant(formData).subscribe(observer);
+    this.createRestaurantSubs =  this.restaurantService.createRestaurant(formData).subscribe(observer);
   }
 
   onSelect(event: Event): void {
@@ -102,5 +102,11 @@ export class RestaurantAddComponent implements OnInit {
         fullScreen: true
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.addressesSubs) {
+      this.addressesSubs.unsubscribe();
+    }
   }
 }
