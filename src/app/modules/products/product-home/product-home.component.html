@@ -17,6 +17,13 @@
     <mat-drawer-content>
       <app-product-item *ngIf="dataSource else noProducts" [dataSource]="dataSource"></app-product-item>
 
+      <div *ngIf="dataSource">
+        <div fxLayout="column" fxLayoutAlign="center center"  *ngIf="dataSource.products.length === 0"
+             style="margin-left: 5px; font-size: 15px; margin-top: 60px">
+          <p>Aucun produit trouvé</p>
+        </div>
+      </div>
+
       <ng-template #noProducts>
         <div style="text-align: center;margin-top: 50px">
           <h2>Un problème est survenu lors de la récupération des produits</h2>

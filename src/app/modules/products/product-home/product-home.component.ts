@@ -60,6 +60,7 @@ export class ProductHomeComponent implements OnInit {
         this.spinner.hide();
       }, 600);
     }
+
   }
   // Paginate change
   onPaginateChange(event: PageEvent): void {

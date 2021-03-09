@@ -29,6 +29,13 @@
       </mat-card>
     </div>
 
+    <div *ngIf="dataSource">
+      <div fxLayout="column" fxLayoutAlign="center center"  *ngIf="dataSource.restaurants.length === 0"
+           style="margin-left: 5px; font-size: 15px; margin-top: 60px">
+        <p>Aucun restaurant trouvé</p>
+      </div>
+    </div>
+
     <ng-template #noRestaurants>
       <div style="text-align: center;margin-top: 50px">
         <h2>Un problème est survenu lors de la récupération des restaurants</h2>
