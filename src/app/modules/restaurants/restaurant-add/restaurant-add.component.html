@@ -1,1 +1,66 @@
-<p>restaurant-add works!</p>
+<ng-container>
+  <h2 style="font-size: 2rem;text-align: center; margin-top: 30px">Nouveau restaurant</h2>
+  <form (ngSubmit)="createRestaurant()" [formGroup]="restaurantForm">
+    <div fxLayout="row" fxLayoutAlign="center center" style="margin-top: 30px">
+      <mat-card style="width: 80%">
+        <mat-card-content>
+          <div fxLayout="column" fxLayoutGap="20px">
+            <mat-form-field>
+              <mat-label>Nom du restaurant</mat-label>
+              <input formControlName="name" matInput placeholder="Nom du restaurant" type="text">
+              <mat-icon matSuffix>restaurant_menu</mat-icon>
+              <mat-hint>Ce nom apparaitra au public</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input formControlName="email" matInput placeholder="myresto@email.com" type="text">
+              <mat-icon matSuffix>alternate_email</mat-icon>
+              <mat-hint>Email pour tout contact</mat-hint>
+            </mat-form-field>
+
+
+            <mat-form-field *ngIf="addresses" appearance="fill">
+              <mat-label>Selectionner une adresse</mat-label>
+              <mat-select disableRipple formControlName="address">
+                <mat-option *ngFor="let address of addresses.addresses" [value]="address._id">
+                  {{address.full_name}}
+                </mat-option>
+              </mat-select>
+              <mat-hint>Adresse du restaurant</mat-hint>
+            </mat-form-field>
+
+            <button (click)="fileUplaoder.click()" mat-stroked-button type="button">Chargé le fichier</button>
+            <mat-hint>Format autorisé <strong>jpg | jpeg | png</strong>. Taille inférieure à <strong>6Mo</strong>
+            </mat-hint>
+
+            <input #fileUplaoder (change)="onSelect($event)" type="file">
+
+            <div *ngIf="imagePreview !== '' && imagePreview && restaurantForm.get('image').valid" class="preview-image">
+              <img [alt]="restaurantForm.value.name" [src]="imagePreview">
+            </div>
+
+            <mat-form-field>
+              <mat-label>Description</mat-label>
+              <textarea formControlName="description" matInput placeholder="Description" rows="3">
+                </textarea>
+              <mat-icon matSuffix>book</mat-icon>
+              <mat-hint>Decrire le restaurant</mat-hint>
+            </mat-form-field>
+
+            <button [disabled]="restaurantForm.invalid" color="primary" mat-flat-button type="submit">
+              ENREGISTRER
+            </button>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>
+
+  <button [routerLink]="'/moderator/restaurants'" color="primary" mat-flat-button
+          style="text-transform: uppercase; margin-top: 15px">
+    <mat-icon>navigate_before</mat-icon>
+    Retour aux restaurants
+  </button>
+</ng-container>

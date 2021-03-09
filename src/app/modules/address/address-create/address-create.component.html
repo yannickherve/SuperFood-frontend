@@ -85,7 +85,11 @@
     </div>
   </form>
 
-  <button mat-flat-button color="primary" style="text-transform: uppercase; margin-top: 15px" [routerLink]="'/users/addresses'">
+  <button *ngIf="!isModerator" mat-flat-button color="primary" style="text-transform: uppercase; margin-top: 15px" [routerLink]="'/users/addresses'">
+    <mat-icon>navigate_before</mat-icon>
+    Retour à mes adresses
+  </button>
+  <button *ngIf="isModerator" mat-flat-button color="primary" style="text-transform: uppercase; margin-top: 15px" [routerLink]="'/moderator/addresses'">
     <mat-icon>navigate_before</mat-icon>
     Retour à mes adresses
   </button>

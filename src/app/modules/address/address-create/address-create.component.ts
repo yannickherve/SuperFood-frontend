@@ -5,6 +5,8 @@ import {AlertService} from '@full-fledged/alerts';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {AddressService} from '../services/address.service';
 import {Subscription} from 'rxjs';
+import {Role} from '../../auth/models/role';
+import {AuthService} from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-address-create',
@@ -34,7 +36,8 @@ export class AddressCreateComponent implements OnInit, OnDestroy {
     private route: Router,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +62,10 @@ export class AddressCreateComponent implements OnInit, OnDestroy {
       }
     };
     this.createAddressSubs = this.addressService.createUserAddress(this.addressForm.value).subscribe(addressObserver);
+  }
+
+  get isModerator(): boolean {
+    return this.authService.hasRole(Role.moderator);
   }
 
   ngOnDestroy(): void {

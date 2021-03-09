@@ -68,7 +68,6 @@ export class UpdateUserDialogComponent implements OnInit {
         this.avatarLink = this.avatarLinkEnv + data._id + '/avatar';
       },
       error: error => {
-        // console.log(error);
       }
     };
     this.authService.getCurrentUser().subscribe(userObserver);

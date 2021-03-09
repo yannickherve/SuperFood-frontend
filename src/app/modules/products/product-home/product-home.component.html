@@ -14,8 +14,14 @@
       </mat-list>
     </mat-drawer>
 
-    <mat-drawer-content >
-      <app-product-item [dataSource]="dataSource"></app-product-item>
+    <mat-drawer-content>
+      <app-product-item *ngIf="dataSource else noProducts" [dataSource]="dataSource"></app-product-item>
+
+      <ng-template #noProducts>
+        <div style="text-align: center;margin-top: 50px">
+          <h2>Un problème est survenu lors de la récupération des produits</h2>
+        </div>
+      </ng-template>
 
       <mat-paginator *ngIf="dataSource"
         [length]="dataSource.numOfProducts"
