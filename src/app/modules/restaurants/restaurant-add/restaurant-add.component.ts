@@ -59,6 +59,7 @@ export class RestaurantAddComponent implements OnInit, OnDestroy {
       next: data => {
         this.spinner.hide();
         this.alertService.success('Restaurant créée avec succès');
+        this.route.navigate(['/moderator/restaurants']).then(() => {});
       },
       error: error => {
         this.spinner.hide();

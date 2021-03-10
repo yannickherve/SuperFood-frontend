@@ -45,7 +45,6 @@ export class AddressCreateComponent implements OnInit, OnDestroy {
 
   createAddress(): void {
     this.spinner.show();
-    console.log(this.addressForm.value);
     const addressObserver = {
       next: data => {
         setTimeout(() => {

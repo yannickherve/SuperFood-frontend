@@ -5,7 +5,6 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {UpdateUserDialogComponent} from '../../../shared/dialogs/update-user-dialog/update-user-dialog.component';
 import {AlertService} from '@full-fledged/alerts';
 import {environment} from '../../../../environments/environment';
-import {log} from 'util';
 
 @Component({
   selector: 'app-user-profile',

@@ -47,9 +47,7 @@ export class SignupComponent implements OnInit {
         this.user = user;
         setTimeout(() => {
           this.spinner.hide();
-          this.alertService.success(
-            'Inscription terminée'
-          );
+          this.alertService.success('Inscription terminée');
           this.route.navigate(['/auth/login']).then(() => {});
         }, 700);
       },
