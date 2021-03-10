@@ -1,4 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AuthService} from '../../../modules/auth/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidenav-left',
@@ -8,7 +10,10 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class SidenavLeftComponent implements OnInit {
   @Output() closeSidenav = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private route: Router
+  ) { }
 
   ngOnInit(): void {
   }
@@ -18,7 +23,25 @@ export class SidenavLeftComponent implements OnInit {
   }
 
   onLogout(): void {
-    this.closeSidenav.emit();
+    const authObserver = {
+      next: res => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        setTimeout(() => {
+          this.route.navigate(['/home']).then(() => {});
+        }, 800);
+      },
+      error: err => {
+        // console.log(err);
+      }
+    };
+    this.authService.logout().subscribe(authObserver);
   }
+
+  get isAuthorized(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+
 
 }

@@ -95,7 +95,6 @@ export class UpdateUserDialogComponent implements OnInit {
 
     this.fileService.uploadProfileImage(formData).pipe(
       map((event) => {
-        console.log(event);
         switch (event.type) {
           case HttpEventType.UploadProgress:
             this.file.progress = Math.round(event.loaded * 100 / event.total);

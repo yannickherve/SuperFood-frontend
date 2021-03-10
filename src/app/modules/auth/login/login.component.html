@@ -27,7 +27,11 @@
         <mat-hint *ngIf="loginForm.controls.password.errors">Password is required</mat-hint>
         <mat-error>Missing password.</mat-error>
       </mat-form-field>
-      <button
+
+        <mat-hint>Utilisateur 👉 <strong>email : </strong>demoUser@email.com | <strong>password : </strong>123456789</mat-hint>
+        <mat-hint>Moderateur 👉 <strong>email : </strong>demoModerator@email.com | <strong>password : </strong>123456789</mat-hint>
+
+        <button
         type="submit"
         mat-raised-button
         color="primary"
