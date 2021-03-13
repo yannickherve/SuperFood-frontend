@@ -1,7 +1,7 @@
 enum Direction {
-  user = 0,
-  moderator = 1,
-  admin= 2,
+  user = 'user',
+  moderator = 'moderator',
+  admin= 'admin',
 }
 
 export interface User {
@@ -11,6 +11,7 @@ export interface User {
   password: string;
   age: number;
   newsletter: boolean;
+  address: string;
   phone: string;
   role: Direction;
   last_seen: string;

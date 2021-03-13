@@ -12,7 +12,7 @@ export interface Product {
   imageName: string;
 }
 
-export interface ServerResponse {
+export interface ProductServerResponse {
   products: Product[];
   currentPage: number;
   pages: number;

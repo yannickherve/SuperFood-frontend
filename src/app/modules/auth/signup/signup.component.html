@@ -1,68 +1,72 @@
 <section class="signup-form">
-  <form [formGroup]="signupForm" (ngSubmit)="registerUser()">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Inscription</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div>
-          <mat-form-field>
-            <input type="text" matInput placeholder="Nom complet" formControlName="name">
-            <mat-error *ngIf="signupForm.controls['name'].hasError('required')">
-              Nom et prénom <strong>obligatoires</strong></mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input type="email" matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="signupForm.controls['email'].hasError('required')">
-              Email <strong>obligatoire</strong></mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input #pass type="password" matInput placeholder="Mot de passe" formControlName="password" minlength="7">
-            <mat-hint align="end">{{pass.value.length || 0 }} / 7</mat-hint>
-            <mat-error *ngIf="signupForm.controls['password'].hasError('required')">
-              Mot de passe <strong>obligatoire</strong></mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input matInput #phone placeholder="Contact" formControlName="phone">
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input pattern="[0-9]+" matInput maxlength="3" #age placeholder="Age" formControlName="age">
-            <mat-hint align="end">{{age.value.length || 0 }} / 3</mat-hint>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <textarea matInput placeholder="Addresse" formControlName="address"></textarea>
-            <mat-error *ngIf="signupForm.controls['address'].hasError('required')">
-              Addresse <strong>obligatoire</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-radio-group formControlName="role">
-              <mat-radio-button value="0">Client</mat-radio-button>
-              <mat-radio-button value="1">Restaurateur</mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </div>
-        <div>
-          <mat-checkbox formControlName="newsletter">S'abonner a la newlsetter</mat-checkbox>
-        </div>
+  <h1 style="text-align: center;">Page d'inscription</h1>
+  <form (ngSubmit)="registerUser()" [formGroup]="signupForm">
+    <div class="container" fxLayout="column" fxLayoutGap="10px">
+      <mat-form-field>
+        <input formControlName="name" matInput placeholder="Nom complet" type="text">
+        <mat-error *ngIf="signupForm.controls['name'].hasError('required')">
+          Nom et prénom <strong>obligatoires</strong></mat-error>
+      </mat-form-field>
 
-        <mat-card-actions>
-          <button mat-raised-button color="primary" [disabled]="signupForm.invalid" type="submit">Submit</button>
-        </mat-card-actions>
+      <mat-form-field>
+        <input formControlName="email" matInput placeholder="Email" type="email">
+        <mat-error *ngIf="signupForm.controls['email'].hasError('required')">
+          Email <strong>obligatoire</strong></mat-error>
+      </mat-form-field>
 
-      </mat-card-content>
-    </mat-card>
+      <mat-form-field>
+        <input #pass formControlName="password" matInput minlength="7" placeholder="Mot de passe" type="password">
+        <mat-hint align="end">{{pass.value.length || 0 }} / 7</mat-hint>
+        <mat-error *ngIf="signupForm.controls['password'].hasError('required')">
+          Mot de passe <strong>obligatoire</strong></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input #phone formControlName="phone" matInput placeholder="Contact">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input #age formControlName="age" matInput maxlength="3" pattern="[0-9]+" placeholder="Age">
+        <mat-hint align="end">{{age.value.length || 0 }} / 3</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea formControlName="address" matInput placeholder="Addresse"></textarea>
+        <mat-error *ngIf="signupForm.controls['address'].hasError('required')">
+          Addresse <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-radio-group formControlName="role" fxLayout="row" fxLayoutGap="15px">
+        <mat-radio-button value="user">Client</mat-radio-button>
+        <mat-radio-button value="moderator">Restaurateur</mat-radio-button>
+      </mat-radio-group>
+      <mat-hint>Si vous êtes restaurateur vous pourrez créer votre restaurant dans votre compte.</mat-hint>
+      <mat-accordion>
+        <mat-expansion-panel (closed)="panelOpenState = false"
+                             (opened)="panelOpenState = true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+             Vous êtes restaurateur ?
+            </mat-panel-title>
+            <mat-panel-description>
+              En savoir plus... <!--{{panelOpenState ? 'open' : 'closed'}}-->
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>Vous pourrez créer votre restaurant dans votre compte. Vous pourrez exposer vos plats et vos prix.
+            Veuillez contacter l'administrateur pour l'étape de validation une fois le compte créer.
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-checkbox formControlName="newsletter">S'abonner a la newlsetter</mat-checkbox>
+
+      <button [disabled]="signupForm.invalid" color="primary" mat-raised-button type="submit">Submit</button>
+
+    </div>
   </form>
+
+  <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 20px">
+    <button mat-flat-button routerLink="/home" color="warn">Retour Acceuil</button>
+  </div>
 </section>

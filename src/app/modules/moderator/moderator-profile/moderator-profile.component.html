@@ -1,1 +1,26 @@
-<p>moderator-profile works!</p>
+<ng-container>
+  <h2 style="font-size: 2rem;text-align: center; margin-top: 30px">Mes informations personnelles</h2>
+
+  <div class="profile-container-moderator" *ngIf="currentUser">
+    <mat-card class="profile-card mat-elevation-z10" style="padding: 30px">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <img mat-card-image [src]="avatarLink" alt="user image" class="header-image">
+        </div>
+        <mat-card-title style="margin-left: 15px">Nom : {{ currentUser.name }}</mat-card-title>
+        <mat-card-subtitle style="margin-left: 15px">Email : {{ currentUser.email }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content style="margin-top: 15px">
+        <p>Téléphone : {{ currentUser.phone }}</p>
+        <p>Age : {{ currentUser.age }}</p>
+        <p>Addresse : {{ currentUser.address }}</p>
+        <p>Rôle : {{ currentUser.role }}</p>
+        <p>Newsletters : Abonné {{ currentUser.newsletter ?  'OUI' : 'NON'}}</p>
+      </mat-card-content>
+      <mat-card-actions class="profile-actions">
+        <button style="width: 20%" mat-flat-button color="primary" (click)="editUser()">Editer</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+</ng-container>

@@ -1,28 +1,40 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartServerResponse} from '../models/cart.model';
 import {CartService} from '../services/cart.service';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
 import {AlertService} from '@full-fledged/alerts';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {Subject} from 'rxjs';
-import {map, takeUntil, tap} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
+import {HelperCartService} from '../services/helper-cart.service';
 
 @Component({
   selector: 'app-cart-home',
   templateUrl: './cart-home.component.html',
   styleUrls: ['./cart-home.component.scss']
 })
-export class CartHomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CartHomeComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['image', 'name', 'price', 'quantity', '_id'];
   dataSource: CartServerResponse;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  cartObserver = {
+    next: (cart) => {
+      setTimeout(() => {
+        this.getTotalPrice();
+        this.spinner.hide();
+      }, 700);
+    },
+    error: (error) => {
+      this.alertService.danger('Problème de connexion et/ou \n problème API');
+      this.spinner.hide();
+    }
+  };
   destroy$ = new Subject<boolean>();
 
   constructor(
     private cartService: CartService,
+    private helperCartService: HelperCartService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService
   ) { }
@@ -32,14 +44,20 @@ export class CartHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initDataSource(): void {
+    this.showSpinner();
     this.cartService.getCart('createdAt:desc', 1, 5).pipe(
-      tap(carts => console.log(carts)),
       map( (cartData: CartServerResponse) => this.dataSource = cartData)
-    ).subscribe();
+    ).subscribe(this.cartObserver);
+
+    if (this.dataSource === undefined) {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 600);
+    }
   }
 
-  ngAfterViewInit(): void {
-    //
+  getTotalPrice(): number {
+   return this.helperCartService.getTotalPrice(this.dataSource.carts);
   }
 
   removeItemCart(id: string): void {
@@ -53,29 +71,44 @@ export class CartHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     const removeObserver = {
-      next: response => {
-        setTimeout(() => this.spinner.hide(), 500);
+      next: () => {
+        setTimeout(() => {
+          this.initDataSource();
+          this.spinner.hide();
+        }, 500);
         setTimeout(() => this.alertService.success('Produit supprimé'), 1000);
       }
     };
     this.cartService.removeFromCart(id).pipe().pipe(takeUntil(this.destroy$)).subscribe(removeObserver);
-    this.initDataSource();
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
+    this.destroy$.next();
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
 
+  // Spinner method
+  showSpinner(): void {
+    this.spinner.show(undefined,
+      {
+        type: 'ball-spin-clockwise-fade-rotating',
+        size: 'medium',
+        color: 'white',
+        fullScreen: true
+      }
+    );
+  }
+
+  // load data if page change
   onPaginateChange(event: PageEvent): void {
+    this.showSpinner();
     const defaultSort = 'createdAt:desc';
     let page = event.pageIndex;
     const limit = event.pageSize;
     page = page + 1;
-    console.log(page, limit);
     this.cartService.getCart(defaultSort, page, limit).pipe(
       map((cartData: CartServerResponse) => this.dataSource = cartData)
-    ).subscribe();
+    ).subscribe(this.cartObserver);
   }
 }

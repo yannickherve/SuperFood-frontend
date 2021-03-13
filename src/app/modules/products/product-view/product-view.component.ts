@@ -3,6 +3,7 @@ import {Product} from '../models/product.model';
 import {ActivatedRoute} from '@angular/router';
 import {ProductService} from '../services/product.service';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-product-view',
@@ -14,6 +15,7 @@ export class ProductViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private productService: ProductService,
     private spinner: NgxSpinnerService
   ) { }
@@ -25,15 +27,17 @@ export class ProductViewComponent implements OnInit {
         this.product = product;
         setTimeout(() => {
           this.spinner.hide();
-        }, 1000);
+        }, 800);
       },
       error: err => {
         this.spinner.hide();
-        console.error(err);
       }
     };
     this.productService.getProduct(this.route.snapshot.paramMap.get('id'))
       .subscribe(observer);
   }
 
+  back(): void {
+    this.location.back();
+  }
 }

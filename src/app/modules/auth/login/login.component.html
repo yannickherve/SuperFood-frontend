@@ -1,62 +1,48 @@
-<section>
-  <form
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="10px"
-    [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <mat-form-field>
-      <input
-        type="email"
-        matInput
-        placeholder="Your email"
-        formControlName="email"
-      />
-      <mat-hint>Please enter a valid email.</mat-hint>
-      <mat-error>Invalid or missing email.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        type="password"
-        matInput
-        placeholder="Your password"
-        minlength="7"
-        formControlName="password"
-      />
-      <mat-hint>Please enter your password.</mat-hint>
-      <mat-error>Missing password.</mat-error>
-    </mat-form-field>
-    <button
-      type="submit"
-      mat-raised-button
-      color="primary"
-      [disabled]="loginForm.invalid"
+<section class="login-container">
+  <h1 style="text-align: center;">Page de connexion</h1>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
     >
-      Submit
-    </button>
-<!--    <mat-spinner></mat-spinner>-->
-  </form>
-  <mat-grid-list cols="3">
-    <mat-grid-tile colspan="3">
-      <mat-card>
-        <mat-card-header color="primary">
-          <mat-card-title>Login Form</mat-card-title>
-        </mat-card-header>
-        <form>
-          <mat-form-field style="width:400px !important">
-            <mat-label>Email</mat-label>
-            <input matInput>
-          </mat-form-field>
-          <br>
-          <mat-form-field style="width:400px !important">
-            <mat-label>Password</mat-label>
-            <input matInput>
-          </mat-form-field>
-          <br>
-          <button mat-raised-button color="primary">Submit</button>
-        </form>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+      <div class="container" fxLayout="column"  fxLayoutGap="20px">
+      <mat-form-field>
+        <input
+          type="email"
+          matInput
+          placeholder="Your email"
+          formControlName="email"
+        />
+        <mat-hint *ngIf="loginForm.controls.email.errors">Email is required</mat-hint>
+        <mat-error>Invalid or missing email.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="password"
+          matInput
+          placeholder="Your password"
+          minlength="7"
+          formControlName="password"
+        />
+        <mat-hint *ngIf="loginForm.controls.password.errors">Password is required</mat-hint>
+        <mat-error>Missing password.</mat-error>
+      </mat-form-field>
+
+        <mat-hint>Utilisateur 👉 <strong>email : </strong>demoUser@email.com | <strong>password : </strong>123456789</mat-hint>
+        <mat-hint>Moderateur 👉 <strong>email : </strong>demoModerator@email.com | <strong>password : </strong>123456789</mat-hint>
+
+        <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="loginForm.invalid"
+      >
+        Submit
+      </button>
+
+      </div>
+    </form>
+  <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 20px">
+    <button mat-flat-button routerLink="/home" color="warn">Retour Acceuil</button>
+  </div>
 </section>

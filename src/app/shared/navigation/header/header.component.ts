@@ -1,6 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../../modules/auth/services/auth.service';
 import {Router} from '@angular/router';
+import {Role} from '../../../modules/auth/models/role';
+import {CartService} from '../../../modules/cart/services/cart.service';
+import {Observable} from 'rxjs';
+import {Cart, CartServerResponse} from '../../../modules/cart/models/cart.model';
 
 @Component({
   selector: 'app-header',
@@ -9,13 +13,38 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
+  cartServer$: Observable<CartServerResponse>;
+  cart: CartServerResponse;
 
   constructor(
     private authService: AuthService,
-    private route: Router
+    private route: Router,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.cartService.getCart().subscribe();
+      this.cartServer$ = this.cartService.cart;
+    } else {
+      return;
+    }
+  }
+
+  get isAuthorized(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  get isModerator(): boolean {
+    return this.authService.hasRole(Role.moderator);
+  }
+
+  get isUser(): boolean {
+    return this.authService.hasRole(Role.user);
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.hasRole(Role.admin);
   }
 
   onToggleSidenav(): void {
@@ -25,13 +54,12 @@ export class HeaderComponent implements OnInit {
   onLogout(): void {
     const authObserver = {
       next: res => {
-        console.log(res);
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
 
         setTimeout(() => {
-          this.route.navigate(['/home']);
-        }, 2000);
+          this.route.navigate(['/home']).then(() => {});
+        }, 800);
       },
       error: err => {
         // console.log(err);

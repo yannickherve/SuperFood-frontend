@@ -39,9 +39,9 @@ const routes: Routes = [
         loadChildren: () => import('./modules/cart/cart.module').then((m) => m.CartModule),
       },
       {
-        path: 'moderator',
-        loadChildren: () => import('./modules/moderator/moderator.module').then(m => m.ModeratorModule)
-      }
+        path: 'order-center',
+        loadChildren: () => import('./modules/order/order.module').then(m => m.OrderModule)
+      },
     ],
   },
   {
@@ -49,6 +49,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
+  {
+    path: 'users',
+    loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+  },
+  {
+    path: 'moderator',
+    loadChildren: () => import('./modules/moderator/moderator.module').then(m => m.ModeratorModule)
+  }
 ];
 
 @NgModule({

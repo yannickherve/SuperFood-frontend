@@ -1,8 +1,5 @@
 <article class="content">
   <mat-toolbar class="second-toolbar" color="warn">
-    <ngx-spinner>
-      <p class="loading">Product Loading..</p>
-    </ngx-spinner>
     <button (click)="drawer.toggle()" mat-icon-button type="button">
       <mat-icon>menu</mat-icon>
     </button>
@@ -18,25 +15,29 @@
     </mat-drawer>
 
     <mat-drawer-content>
-      <div class="example-sidenav-content" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
-        <mat-card *ngFor="let product of products" class="example-card">
-          <mat-card-header>
-            <div class="example-header-image" fxLayoutAlign.xs="center center" mat-card-avatar></div>
-            <mat-card-title>{{ product.name }}</mat-card-title>
-            <mat-card-subtitle>Categorie : {{ product.category }}</mat-card-subtitle>
-          </mat-card-header>
-          <img [src]="product.image" alt="Product"
-               mat-card-image>
-          <mat-card-content>
-            <p>{{ product.description }}.</p>
-            <p>Prix: {{ product.price  | currency:'EUR':'€' }}.</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button [routerLink]="['/products-center/product-view', product._id]" mat-flat-button color="primary">Détails du plat</button>
-            <app-cart-button-widget [product]="product"></app-cart-button-widget>
-          </mat-card-actions>
-        </mat-card>
+      <app-product-item *ngIf="dataSource else noProducts" [dataSource]="dataSource"></app-product-item>
+
+      <div *ngIf="dataSource">
+        <div fxLayout="column" fxLayoutAlign="center center"  *ngIf="dataSource.products.length === 0"
+             style="margin-left: 5px; font-size: 15px; margin-top: 60px">
+          <p>Aucun produit trouvé</p>
+        </div>
       </div>
+
+      <ng-template #noProducts>
+        <div style="text-align: center;margin-top: 50px">
+          <h2>Un problème est survenu lors de la récupération des produits</h2>
+        </div>
+      </ng-template>
+
+      <mat-paginator *ngIf="dataSource"
+        [length]="dataSource.numOfProducts"
+        [pageSize]="dataSource.perPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event; onPaginateChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+
     </mat-drawer-content>
   </mat-drawer-container>
 </article>

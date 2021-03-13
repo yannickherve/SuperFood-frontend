@@ -1,0 +1,60 @@
+.profile-container-moderator {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+.form-box {
+  width: 70%;
+  justify-content: space-between;
+}
+
+.profile-card {
+  margin: 20px 10px;
+  width: 80%;
+  height: 80%;
+  //max-width: 80%;
+}
+
+.profile-actions {
+  text-align: center;
+}
+
+.header-image {
+  background-size: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  padding: 2px;
+}
+
+.mat-form-field {
+  margin: 40px 0;
+  width: 500px !important;
+}
+
+.mat-toolbar-single-row {
+  height: auto !important;
+  background: transparent;
+}
+
+.mat-toolbar-single-row button {
+  width: 200px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+#uploadFile {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+}
+

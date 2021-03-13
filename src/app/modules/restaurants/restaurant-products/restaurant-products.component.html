@@ -1,0 +1,56 @@
+<ng-container>
+<!--  <header class="restaurant-infos">-->
+<!--    <img [src]="restaurant?.image" alt="Photo du restaurant"  class="img-container">-->
+<!--  </header>-->
+  <div *ngIf="restaurant" class="header-restaurant"
+       [ngStyle]="{'background': 'linear-gradient(to bottom, #000, 30%, #0005), center top / cover url(' + restaurant?.image + ') fixed'}">
+  </div>
+  <ng-container *ngIf="products else noProducts">
+    <div *ngIf="products.numOfProducts === 0 else showItemBlock" style="margin: 70px">
+
+      <div style="min-width: 60%" fxLayout="row" fxLayoutAlign="center center">
+        <mat-card style="width: 60%">
+          <mat-card-content>
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <h2 style="font-size: 2rem;text-align: center; margin-top: 30px">Aucun menu enregistré.</h2>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button color="primary" (click)="back()">
+              <mat-icon>reply</mat-icon>
+              RETOUR
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noProducts>
+    <div style="text-align: center;margin-top: 50px">
+      <h2>Un problème est survenu lors de la récupération des données</h2>
+    </div>
+  </ng-template>
+
+  <ng-template  #showItemBlock>
+    <div style="margin-top: 70px; margin-bottom: 20px">
+      <app-product-item [dataSource]="products"></app-product-item>
+    </div>
+
+    <mat-paginator *ngIf="products"
+                   [length]="products.numOfProducts"
+                   [pageSize]="products.perPage"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageEvent = $event; onPaginateChange($event)"
+                   showFirstLastButtons>
+    </mat-paginator>
+
+    <div fxLayout="row" fxLayoutAlign="center center" style="padding-bottom: 30px">
+      <button color="primary" mat-flat-button [routerLink]="['/restaurants-center']">
+        <mat-icon>reply</mat-icon>
+        RETOUR AUX RESTAURANTS
+      </button>
+    </div>
+  </ng-template>
+
+</ng-container>

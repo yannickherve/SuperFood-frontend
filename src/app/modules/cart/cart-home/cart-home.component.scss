@@ -1,23 +1,20 @@
+.container {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
 .cartContainer {
   background: #fff;
   box-shadow: 0 0 5px 1px #dee1e1;
-  max-width: 1024px;
-  position: relative;
+  max-width: 900px;
   border-radius: 15px;
-  padding: 30px;
+  padding: 20px;
   width: 100%;
-  height: auto;
-  //min-height: 600px;
 }
 
-.table-container {
-  position: relative;
-  max-height: 700px;
-  max-width: 700px;
-  overflow: auto;
-  width: 100%;
-  align-items: center;
-}
 .img-container {
   width: 100px;
   height: 100px;
@@ -36,5 +33,15 @@ img {
   height: 100%;
   object-fit: contain;
   margin-left: 20px;
+}
+.empty-card-container {
+  width: 100%;
+  margin-top: 40px;
+}
+.empty-card-img {
+  width: 70%;
+  background-color: #fafafa;
+  object-fit: cover;
+  background-size: cover;
 }
 

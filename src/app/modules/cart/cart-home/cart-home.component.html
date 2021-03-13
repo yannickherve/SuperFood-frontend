@@ -1,62 +1,101 @@
-<div fxLayout="column" fxLayoutAlign="space-around center">
-  <!--  <div class="spinner-container" *ngIf="dataSource.loading$ | async">-->
-  <!--    <mat-spinner></mat-spinner>-->
-  <!--  </div>-->
-  <div class="cartContainer" *ngIf="dataSource">
-    <mat-table [dataSource]="dataSource.carts" class="mat-elevation-z8">
-      <!-- Image Column -->
-      <ng-container matColumnDef="image">
-        <mat-header-cell *matHeaderCellDef> Image</mat-header-cell>
-        <mat-cell class="img-container" *matCellDef="let element"><img [src]="element.product.image"></mat-cell>
-      </ng-container>
+<div class="container">
+  <ng-container *ngIf="dataSource else noCart">
+    <div *ngIf="dataSource.numOfCarts === 0 else showCartBlock">
+      <div class="empty-card-container">
+        <img src="assets/img/shopping-cart.svg" alt="cart-box" class="empty-card-img">
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center center"
+           style="margin-left: 5px; font-size: 15px">
+        <p>Votre panier est vide</p>
+        <p>Explorez le shop pour ajouter des plats que vous aimez</p>
+        <button mat-flat-button color="primary" [routerLink]="['/products-center/products']">
+          CONTINUER MES ACHATS
+        </button>
+      </div>
+    </div>
+  </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Nom</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      </ng-container>
+  <ng-template #noCart>
+    <div style="text-align: center;margin-top: 50px">
+      <h2>Un problème est survenu lors de la récupération du panier</h2>
+    </div>
+  </ng-template>
 
-      <!-- Price Column -->
-      <ng-container matColumnDef="price">
-        <mat-header-cell *matHeaderCellDef> Prix</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
-      </ng-container>
+  <ng-template #showCartBlock>
+    <div *ngIf="dataSource" class="cartContainer">
+      <mat-table [dataSource]="dataSource.carts" class="mat-elevation-z8">
+        <!-- Image Column -->
+        <ng-container matColumnDef="image">
+          <mat-header-cell *matHeaderCellDef> Image</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="img-container"><img [src]="element.product.image"></mat-cell>
+        </ng-container>
 
-      <!-- Quantity Column -->
-      <ng-container matColumnDef="quantity">
-        <mat-header-cell *matHeaderCellDef> Quantité</mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Nom</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>Qtité</mat-label>
-            <input matInput type="number" min="1" [value]="element.quantity">
-            <mat-hint align="start"><strong>En stock</strong></mat-hint>
-          </mat-form-field>
-        </mat-cell>
-      </ng-container>
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef> Prix</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.price | currency:'EUR':'€' }} </mat-cell>
+        </ng-container>
 
-      <!-- _Id for remove quantity -->
-      <ng-container matColumnDef="_id">
-        <mat-header-cell *matHeaderCellDef> test</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-flat-button color="warn" (click)="removeItemCart(element._id)">
-            <mat-icon>delete</mat-icon>
-            <span>Supprimer</span>
-          </button>
-        </mat-cell>
-      </ng-container>
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef> Quantité</mat-header-cell>
+          <mat-cell *matCellDef="let element">
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+            <mat-form-field class="example-full-width" style="width: 50%">
+              <mat-label>Qtité</mat-label>
+              <input [value]="element.quantity" matInput min="1" type="number" disabled>
+              <mat-hint align="start"><strong>En stock</strong></mat-hint>
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
 
-    <mat-paginator
-      [length]="dataSource.numOfCarts"
-      [pageSize]="dataSource.perPage"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="pageEvent = $event; onPaginateChange($event)"
-      showFirstLastButtons>
-    </mat-paginator>
-  </div>
+        <!-- _Id for remove quantity -->
+        <ng-container matColumnDef="_id">
+          <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button (click)="removeItemCart(element._id)" color="warn" mat-flat-button>
+              <mat-icon>delete</mat-icon>
+              <span>Supprimer</span>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Disclaimer column -->
+        <ng-container matColumnDef="disclaimer">
+          <mat-footer-cell *matFooterCellDef colspan="2">
+            TOTAL
+          </mat-footer-cell >
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></mat-footer-row>
+
+      </mat-table>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="50" style="margin-top: 10px; font-size: 14px">
+        <div>TOTAL: </div>
+        <div style="padding-left: 40px; padding-right: 30px">{{ getTotalPrice() | currency:'EUR':'€' }}</div>
+      </div>
+
+      <mat-paginator
+        (page)="pageEvent = $event; onPaginateChange($event)"
+        [length]="dataSource.numOfCarts"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="dataSource.perPage"
+        showFirstLastButtons>
+      </mat-paginator>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <button mat-flat-button color="primary" [routerLink]="['/products-center/products']">CONTINUER MES ACHATS</button>
+        <button mat-flat-button color="accent" [routerLink]="['/order-center']">PASSER LA COMMANDE</button>
+      </div>
+    </div>
+  </ng-template>
 
 </div>

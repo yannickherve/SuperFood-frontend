@@ -1,4 +1,38 @@
-.container-left {
-  background: blue;
-  color: red;
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  background-color: azure;
 }
+.item {
+  min-width: 25%;
+  width: 25%;
+  min-height: 20%;
+  height: 22%;
+  margin: 10px;
+}
+.img-container{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.searchBar {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  width: 100%;
+}
+
+@media all and (max-width: 599px) {
+  .container {
+    flex-direction: column;
+  }
+  .item {
+    width: 70%;
+    height: 30%;
+    min-height: 25%;
+  }
+}
+

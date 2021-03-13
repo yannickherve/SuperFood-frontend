@@ -23,6 +23,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -49,9 +51,14 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatGridListModule,
     MatRadioModule,
     MatMenuModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatBadgeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressBarModule,
   ],
   exports: [
+    MatBadgeModule,
     MatExpansionModule,
     MatMenuModule,
     MatRadioModule,
@@ -74,7 +81,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatProgressSpinnerModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressBarModule,
   ]
 })
 export class MaterialModule { }

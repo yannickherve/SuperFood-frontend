@@ -1,0 +1,80 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar style="background-color: #e4f9f5;">
+      <a mat-list-item [routerLink]="['/']" style="width: 100%">
+        <div class="logo">
+          <span class="logo1">S</span>
+          <span class="logo2">Food</span>
+        </div>
+      </a>
+    </mat-toolbar>
+    <div *ngIf="currentUser" class="profile">
+      <img mat-card-image [src]="avatarLink" alt="user profile image" style="margin-left: 3px; margin-bottom: 20px">
+      <span>BONJOUR {{ currentUser.name }}</span>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/users']">
+        <mat-icon style="margin-right: 5px">dashboard</mat-icon>
+        Dashboard
+      </a>
+      <a mat-list-item [routerLink]="['/users/profile']">
+        <mat-icon style="margin-right: 5px">person</mat-icon>
+        Informations
+      </a>
+      <a mat-list-item [routerLink]="['/users/orders']">
+        <mat-icon style="margin-right: 5px">privacy_tip</mat-icon>
+        Mes commandes
+      </a>
+      <a mat-list-item [routerLink]="['/users/addresses']">
+        <mat-icon style="margin-right: 5px">location_on</mat-icon>
+        Mes adresses
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="right-container">
+      <mat-toolbar color="accent" style="background-color: #40514e">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+          <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+            <li>
+              <a mat-button [matMenuTriggerFor]="beforeMenu">
+                <mat-icon>notifications</mat-icon>
+              </a>
+              <mat-menu #beforeMenu="matMenu" xPosition="before">
+                <button mat-menu-item>Notification 1</button>
+                <button mat-menu-item>Notification 2</button>
+              </mat-menu>
+            </li>
+            <li>
+              <a mat-button [matMenuTriggerFor]="beforeMenu2">
+                <mat-icon>person</mat-icon>
+              </a>
+              <mat-menu #beforeMenu2="matMenu" xPosition="before">
+                <button mat-menu-item (click)="onLogout()" *ngIf="isAuthorized">Logout</button>
+              </mat-menu>
+            </li>
+          </ul>
+        </div>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+      <footer class="footer">Footer</footer>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
