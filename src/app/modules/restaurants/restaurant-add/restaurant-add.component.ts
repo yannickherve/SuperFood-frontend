@@ -89,7 +89,7 @@ export class RestaurantAddComponent implements OnInit, OnDestroy {
         this.alertService.danger('Erreur lors de la réccupération des adresses \n impossible de continuer');
       }
     };
-    this.addressesSubs = this.addressService.getAddresses('createdAt:desc', 1, 5).pipe(
+    this.addressesSubs = this.addressService.getAddresses().pipe(
       map(addressData => this.addresses = addressData)
     ).subscribe(addressObserver);
   }
@@ -108,6 +108,9 @@ export class RestaurantAddComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.addressesSubs) {
       this.addressesSubs.unsubscribe();
+    }
+    if (this.createRestaurantSubs) {
+      this.createRestaurantSubs.unsubscribe();
     }
   }
 }

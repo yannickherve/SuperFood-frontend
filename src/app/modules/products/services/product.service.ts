@@ -35,6 +35,10 @@ export class ProductService {
     return this.http.get<Product>(this.API_URL + '/products/' + productId);
   }
 
+  createProduct(formData: FormData): Observable<any> {
+    return this.http.post<FormData>(this.API_URL + '/products', formData);
+  }
+
   handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
