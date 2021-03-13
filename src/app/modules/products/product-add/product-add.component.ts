@@ -27,7 +27,6 @@ export class ProductAddComponent implements OnInit, OnDestroy {
     image: [null, Validators.required],
     restaurant: [null, Validators.required],
   });
-
   imagePreview: string;
   createProductSubs: Subscription;
   getRestaurantsSubs: Subscription;
@@ -63,7 +62,7 @@ export class ProductAddComponent implements OnInit, OnDestroy {
     formData.append('image', this.productForm.value.image);
 
     const observer = {
-      next: data => {
+      next: () => {
         this.spinner.hide();
         this.alertService.success('Produit crée avec succès');
         this.route.navigate(['/moderator/restaurants']).then(() => {});
@@ -89,10 +88,10 @@ export class ProductAddComponent implements OnInit, OnDestroy {
 
   getRestaurantsList(): void {
     const restaurantsObserver = {
-      next: restaurants => {
+      next: () => {
         this.alertService.info('Liste des restaurants OK!');
       },
-      error: error => {
+      error: () => {
         this.alertService.danger('Erreur lors de la réccupération des restaurants \n impossible de continuer');
       }
     };
@@ -103,10 +102,10 @@ export class ProductAddComponent implements OnInit, OnDestroy {
 
   getCategoriesList(): void {
     const categoriesObserver = {
-      next: categories => {
+      next: () => {
         this.alertService.info('Liste des catégories OK!');
       },
-      error: error => {
+      error: () => {
         this.alertService.danger('Erreur lors de la réccupération des catégories \n impossible de continuer');
       }
     };

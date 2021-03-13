@@ -20,49 +20,49 @@
               <mat-label>Nom complet</mat-label>
               <input type="text" formControlName="full_name" matInput placeholder="Nom Prénom">
               <mat-icon matSuffix>person</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>Ex: Richard test</mat-hint>
             </mat-form-field>
 
             <mat-form-field *ngIf="addressForm.controls['professional'].value">
               <mat-label>Compagnie</mat-label>
               <input type="text" matInput placeholder="Batiment, immeuble" formControlName="company">
               <mat-icon matSuffix>home_work</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>Mon entreprise</mat-hint>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>Adresse 1</mat-label>
               <input type="text" matInput placeholder="Adresse 1" formControlName="address1">
               <mat-icon matSuffix>add_location</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>Ex: 13 avenue DelaFosse</mat-hint>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>Adresse 2</mat-label>
               <input type="text" matInput placeholder="Adresse 2" formControlName="address2">
               <mat-icon matSuffix>add_location</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>Ex: 13 avenue DelaFosse2</mat-hint>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>Ville</mat-label>
               <input type="text" matInput placeholder="Ville" formControlName="city">
               <mat-icon matSuffix>add_location_alt</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>Situé où?</mat-hint>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>Code postal</mat-label>
-              <input type="text" matInput placeholder="Code postal" formControlName="postcode">
+              <input type="text" matInput placeholder="Code postal" pattern="[0-9]+" formControlName="postcode">
               <mat-icon matSuffix>add_location</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>Chiffres uniquement</mat-hint>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>N° de téléphone</mat-label>
-              <input type="text" matInput placeholder="Phone" formControlName="phone">
+              <input type="text" matInput placeholder="ex: 07458523" formControlName="phone">
               <mat-icon matSuffix>phone</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>Doit contenir que des chiffres</mat-hint>
             </mat-form-field>
 
             <mat-form-field appearance="fill">

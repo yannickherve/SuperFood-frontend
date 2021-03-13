@@ -52,7 +52,14 @@ export class AddressCreateComponent implements OnInit, OnDestroy {
           this.alertService.success(
             'Adresse créée'
           );
-          this.route.navigate(['/users/addresses']).then(() => {});
+
+          if (this.isUser) {
+            this.route.navigate(['/users/addresses']).then(() => {});
+          }
+
+          if (this.isModerator) {
+            this.route.navigate(['/moderator/addresses']).then(() => {});
+          }
         }, 600);
       },
       error: (error) => {
@@ -66,6 +73,11 @@ export class AddressCreateComponent implements OnInit, OnDestroy {
   get isModerator(): boolean {
     return this.authService.hasRole(Role.moderator);
   }
+
+  get isUser(): boolean {
+    return this.authService.hasRole(Role.user);
+  }
+
 
   ngOnDestroy(): void {
     if (this.createAddressSubs) {
