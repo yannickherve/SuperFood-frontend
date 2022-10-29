@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:4000',
-  avatarLink: 'http://localhost:4000/users/'
+  // baseUrl: 'http://localhost:4000',
+  // avatarLink: 'http://localhost:4000/users/'
+  baseUrl: 'https://apifood.geomaniadevs.com',
+  avatarLink: 'https://apifood.geomaniadevs.com/users/'
 };
 
 /*
